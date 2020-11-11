@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -9,70 +12,51 @@ import org.eclipse.swt.widgets.Text;
 public class SelectionAdapterOpen 
    extends SelectionAdapter {
 
-  // Shell des Editors
   private Shell parent;
-  
-  // Textfeld des Editors
   private Text text;
   
-  public SelectionAdapterOpen(
-      Shell parent, Text text) {
+  public SelectionAdapterOpen(Shell parent, Text text) {
     this.parent = parent;
     this.text = text;
-  } // end constructor
+  }
   
   @Override
-  public void widgetSelected(
-       SelectionEvent e){
-    // MessageBox erzeugen: Sie hat die
-    // Buttons: Yes, No, Cancel
-    // Sie hat ein Question-Icon
-    // Der Message-Text wird umgebrochen,
-    // wenn er zu lang ist.
-    MessageBox msg = new MessageBox(parent,
-        SWT.ICON_QUESTION | SWT.YES 
-        | SWT.NO | SWT.CANCEL | SWT.WRAP);
-    
-    // Nachrichtentext fuer die MessageBox
-    // setzen
-    msg.setMessage(
-        "Wollen Sie auch wirklich?");
-    
-    // MessageBox aufklappen: Die open()-
-    // Methode liefert als int-Wert zurueck,
-    // mit welchem PushButton sie zugeklappt
-    // wurde
-    int retval = msg.open();
-    switch(retval) {
-      case SWT.YES: openFileDialog(); break;
-      case SWT.NO: break;
-      case SWT.CANCEL: break;
+  public void widgetSelected(SelectionEvent e){
+	  openFileDialog();
     } 
-  } // end method widgetSelected()
   
- //private Hilfsmethode zum
- // Oeffnen einer Datei
  private void openFileDialog()
  {
-   // FileDialog zum Oeffnen einer
-   // Datei erzeugen
-   FileDialog f = 
-       new FileDialog(parent, SWT.OPEN);
+   FileDialog f = new FileDialog(parent, SWT.OPEN);
    
-   // FileDialog aufklappen
-   // --> seine open()-Methode liefert
-   // den selektierten Dateinamen als
-   // String zurueck
    String fname = f.open();
    
-   // Inhalt aus der selektierten
-   // Datei in String txt einlesen
+   
+   
    if(fname != null) {
-     String txt = FileIO.read(fname);
+	 Aufgabe1 newWindow = Aufgabe1.createNewWindow();
+	 String txt = FileIO.read(fname);
+     try {
+    	 String[] lines = txt.split("\n");
+    	 String colorStr = lines[0].substring(2);
+    	 String colorsStr[] = colorStr.split(",");
+    	 ArrayList<Integer> colorsInt = new ArrayList(3);
+    	 for(String s:colorsStr) {
+    		 colorsInt.add(Integer.parseInt(s));
+    	 }
+    	 RGB color = new RGB(colorsInt.get(0),colorsInt.get(1), colorsInt.get(2));
+    	 newWindow.setColor(color);
+    	 txt = "";
+    	 for(int i=1; i<lines.length; i++) {
+    		 txt += lines[i];
+    	 }
+     }catch(Exception e){
+    	 e.printStackTrace();
+     }
+    
      
-     // String txt ins Textfeld
-     // einblenden
-     text.setText(txt);
+     newWindow.setText(txt);
+     newWindow.open();
    } 
- } // end method openFileDialog()
-} // end class SelectionAdapterOpen
+ }
+}

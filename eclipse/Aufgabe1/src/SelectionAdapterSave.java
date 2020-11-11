@@ -1,17 +1,17 @@
+
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class SelectionAdapterSave 
-          extends SelectionAdapter {
+public class SelectionAdapterSave extends SelectionAdapter {
   
-  // Shell des Editors
   private Shell parent;
-  
-  // Textfeld des Editors
   private Text text;
   
   public SelectionAdapterSave(
@@ -22,24 +22,13 @@ public class SelectionAdapterSave
   
   public void widgetSelected(
           final SelectionEvent e) {
-    // FileDialog zum Speichern einer
-    // Datei erzeugen
-    FileDialog f = 
-          new FileDialog(parent, SWT.SAVE);
-    
-    // FileDialog aufklappen
-    // --> seine open()-Methode liefert
-    // den selektierten Dateinamen als
-    // String zurueck
+    FileDialog f = new FileDialog(parent, SWT.SAVE);
     String fname = f.open();
-    
-    // Inhalt des Textfeldes auf
-    // die selektierte Datei
-    // schreiben
     if(fname != null) {
-      FileIO.write(fname, 
-          text.getText());
+    	RGB color = text.getForeground().getRGB();
+    	String colorStr = color.red + "," + color.green + "," + color.blue;
+    	String newText = "//" + colorStr + "\n" + text.getText();
+    	FileIO.write(fname,newText);
     }
-    
-  } // end method widgetSelected()
-} // end class SelectionAdapterSave
+  }
+}

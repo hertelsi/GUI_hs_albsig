@@ -2,7 +2,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
@@ -38,10 +40,11 @@ public class Aufgabe1 {
   private ToolItem tiLanguage;
   
   private Shell shell;
-  private Display display;
+  private static Display display;
   
   private Combo languageCombo;
   private String[] languages = {"Englisch","Deutsch"};
+  
   
   // 1. Shell erzeugen
   private void createShell(){
@@ -49,7 +52,7 @@ public class Aufgabe1 {
     shell.setLayout(
         new GridLayout(1,true));
   }
-  private void createDisplay()
+  private static void createDisplay()
   {
     display = new Display();
   }
@@ -108,20 +111,26 @@ public class Aufgabe1 {
     
     
   }
-  public void createToolBar() {
+  private void createListeners() {
+	  fileNewItem.addSelectionListener(new SelectionAdapterNew());
+	  fileOpenItem.addSelectionListener(new SelectionAdapterOpen(shell,textField));
+	  tiOpen.addSelectionListener(new SelectionAdapterOpen(shell, textField));
+	  fileSaveItem.addSelectionListener(new SelectionAdapterSave(shell,textField));
+	  contextFileNewItem.addSelectionListener(new SelectionAdapterNew());
+	  contextFileSaveItem.addSelectionListener(new SelectionAdapterSave(shell,textField));
+	  tiSave.addSelectionListener(new SelectionAdapterSave(shell,textField));
+	  fileQuitItem.addSelectionListener(new SelectionAdapterQuit(shell));
+	  editColorItem.addSelectionListener(new SelectionAdapterTextColor(shell,textField));
+  }
+public void createToolBar() {
 	 toolbar = new ToolBar(shell,SWT.FLAT);
-	 // GridDaten fuer ToolBar: Soll in x-Richtung Zelle voll ausfuellen,
-	 // in y-Richtung oben kleben bleiben (BEGINNING), in x-Richtung mitwachsen (true),
-	 // in y-Richtung nicht mitwachsen (false) und in x/y-Richtung 1 Zelle belegen
 	 GridData gData = new GridData(SWT.FILL,SWT.BEGINNING,true,false,1,1);
 	 toolbar.setLayoutData(gData);
 	 tiOpen = new ToolItem(toolbar,SWT.PUSH);
 	 tiSave = new ToolItem(toolbar,SWT.PUSH);
 	 try {
-		InputStream s1= 
-					Button.class.getResource("/new_wiz.png").openStream();
-		InputStream s2= 
-				Button.class.getResource("/save_edit.png").openStream();
+		InputStream s1 = Button.class.getResource("/open-folder.png").openStream();
+		InputStream s2 = Button.class.getResource("/save_edit.png").openStream();
 		 Image iNew = new Image(display,s1);
 		 Image iSave = new Image (display,s2);
 		 tiOpen.setImage(iNew);
@@ -141,37 +150,38 @@ public class Aufgabe1 {
   }
   
   
-  private void createListeners() {
-	  fileNewItem.addSelectionListener(
-			  new SelectionAdapterNew(textField));
-	  fileOpenItem.addSelectionListener(
-			  new SelectionAdapterOpen(shell,textField));
-	  fileSaveItem.addSelectionListener(
-			  new SelectionAdapterSave(shell,textField));
-	  contextFileNewItem.addSelectionListener(
-			  new SelectionAdapterNew(textField));
-	  contextFileSaveItem.addSelectionListener(
-			  new SelectionAdapterSave(shell,textField));
+  public static Aufgabe1 createNewWindow() {
+	  if(display == null) {
+		  createDisplay();
+	  }
+	  return new Aufgabe1();
   }
   
-  // 5. Konstruktor
+  public void setText(String text) {
+	  this.textField.setText(text);
+  }
+  
+  public void setColor(RGB color) {
+	  this.textField.setForeground(new Color(color));
+  }
+  
+  
+  
   public Aufgabe1() {
-    createDisplay();
     createShell();
     createMenus();
     createToolBar();
     createText();
     createListeners();
-  } // end Constructor
+  }
   
-  // 6. EventLoop
-  public void open(){ //wie immer ...
+  public void open(){
     shell.open();
     while(!shell.isDisposed()){
       if(!display.readAndDispatch()){
         display.sleep();
       }
     }
-  } // end method open()
-} // end class Beispiel11
+  }
+}
 
