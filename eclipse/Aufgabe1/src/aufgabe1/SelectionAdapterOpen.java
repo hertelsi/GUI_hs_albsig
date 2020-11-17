@@ -1,3 +1,4 @@
+package aufgabe1;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;

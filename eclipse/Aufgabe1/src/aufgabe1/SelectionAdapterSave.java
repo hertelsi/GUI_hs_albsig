@@ -1,3 +1,4 @@
+package aufgabe1;
 
 
 import org.eclipse.swt.SWT;

@@ -1,3 +1,4 @@
+package aufgabe1;
 public class Aufgabe1Main {
 
 	public static void main(String[] args) {

@@ -1,3 +1,4 @@
+package aufgabe1;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -43,7 +44,9 @@ public class Aufgabe1 {
   private static Display display;
   
   private Combo languageCombo;
-  private String[] languages = {"Englisch","Deutsch"};
+  private String[] languages = {"English","Deutsch"};
+  
+  private ModifyListenerLanguages modifyListenerLanguages;
   
   
   // 1. Shell erzeugen
@@ -65,9 +68,8 @@ public class Aufgabe1 {
 	
 	// MenuTitel erzeugen
 	fileTitle = new MenuItem(menuBar,SWT.CASCADE);
-	fileTitle.setText("&File");
+	
 	editTitle = new MenuItem(menuBar,SWT.CASCADE);
-	editTitle.setText("&Edit");
 	
 	// Menues aufsetzen
 	fileMenu = new Menu(shell,SWT.DROP_DOWN);
@@ -77,19 +79,16 @@ public class Aufgabe1 {
 	
 	// Items erzeugen und in die Menues einsetzen
 	fileNewItem = new MenuItem(fileMenu,SWT.PUSH);
-	fileNewItem.setText("&New");
 	
 	fileOpenItem = new MenuItem(fileMenu, SWT.PUSH);
-	fileOpenItem.setText("&Open...");
 	
 	fileSaveItem = new MenuItem(fileMenu,SWT.PUSH);
-	fileSaveItem.setText("&Save...");
 	
 	fileQuitItem = new MenuItem(fileMenu,SWT.PUSH);
-	fileQuitItem.setText("&Quit");
 	
 	editColorItem = new MenuItem(editMenu,SWT.PUSH);
-	editColorItem.setText("Text &Color");
+	
+	
     
   } 
 
@@ -105,9 +104,7 @@ public class Aufgabe1 {
 	  
 	  // MenuItems erstellen
 	  contextFileNewItem = new MenuItem(contextMenue,SWT.PUSH);
-	  contextFileNewItem.setText("New");
 	  contextFileSaveItem = new MenuItem(contextMenue,SWT.PUSH);
-	  contextFileSaveItem.setText("Save");
     
     
   }
@@ -121,8 +118,10 @@ public class Aufgabe1 {
 	  tiSave.addSelectionListener(new SelectionAdapterSave(shell,textField));
 	  fileQuitItem.addSelectionListener(new SelectionAdapterQuit(shell));
 	  editColorItem.addSelectionListener(new SelectionAdapterTextColor(shell,textField));
+	  modifyListenerLanguages = new ModifyListenerLanguages(fileNewItem, fileOpenItem, fileSaveItem, fileQuitItem, fileTitle, editTitle, editColorItem, contextFileNewItem, contextFileSaveItem);
+	  languageCombo.addModifyListener(modifyListenerLanguages);
   }
-public void createToolBar() {
+private void createToolBar() {
 	 toolbar = new ToolBar(shell,SWT.FLAT);
 	 GridData gData = new GridData(SWT.FILL,SWT.BEGINNING,true,false,1,1);
 	 toolbar.setLayoutData(gData);
@@ -146,6 +145,7 @@ public void createToolBar() {
 	languageCombo.pack();
 	tiLanguage.setWidth(languageCombo.getSize().x);
 	tiLanguage.setControl(languageCombo);
+	languageCombo.select(0);
 	
   }
   
@@ -173,6 +173,7 @@ public void createToolBar() {
     createToolBar();
     createText();
     createListeners();
+    modifyListenerLanguages.setText("English");
   }
   
   public void open(){
