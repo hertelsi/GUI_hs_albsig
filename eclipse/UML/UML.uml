@@ -3,7 +3,7 @@
   <packageImport xmi:type="uml:PackageImport" xmi:id="_MRwV4CjoEeuwZIBxxK9icg">
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
-  <packagedElement xmi:type="uml:Activity" xmi:id="_NZ8F8CjoEeuwZIBxxK9icg" name="Activity2" node="_llwwwCjoEeuwZIBxxK9icg _5XDxACjoEeuwZIBxxK9icg _E8qiMCjpEeuwZIBxxK9icg _Hj8tgCjpEeuwZIBxxK9icg _hh3WICjrEeuwZIBxxK9icg _0yRP0CjrEeuwZIBxxK9icg _GkabwCjsEeuwZIBxxK9icg _PsEj0CjsEeuwZIBxxK9icg _SNL1sCjsEeuwZIBxxK9icg _dVtpUCjsEeuwZIBxxK9icg _z4hH4CjsEeuwZIBxxK9icg _LUm-4CjtEeuwZIBxxK9icg _cjz10CjtEeuwZIBxxK9icg">
+  <packagedElement xmi:type="uml:Activity" xmi:id="_NZ8F8CjoEeuwZIBxxK9icg" name="change" node="_llwwwCjoEeuwZIBxxK9icg _5XDxACjoEeuwZIBxxK9icg _E8qiMCjpEeuwZIBxxK9icg _Hj8tgCjpEeuwZIBxxK9icg _hh3WICjrEeuwZIBxxK9icg _0yRP0CjrEeuwZIBxxK9icg _GkabwCjsEeuwZIBxxK9icg _PsEj0CjsEeuwZIBxxK9icg _SNL1sCjsEeuwZIBxxK9icg _dVtpUCjsEeuwZIBxxK9icg _z4hH4CjsEeuwZIBxxK9icg _LUm-4CjtEeuwZIBxxK9icg _cjz10CjtEeuwZIBxxK9icg _Nko1YCyeEeuutoZBv-DZQg _2ZH7kCyeEeuutoZBv-DZQg _S9wZsCyfEeuutoZBv-DZQg _vuhPUCyfEeuutoZBv-DZQg _ACd-8CygEeuutoZBv-DZQg _CTuP4CygEeuutoZBv-DZQg">
     <edge xmi:type="uml:ControlFlow" xmi:id="_U9HRkCjqEeuwZIBxxK9icg" target="_E8qiMCjpEeuwZIBxxK9icg" source="_5XDxACjoEeuwZIBxxK9icg"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_bYnVYCjqEeuwZIBxxK9icg" target="_Hj8tgCjpEeuwZIBxxK9icg" source="_E8qiMCjpEeuwZIBxxK9icg"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_pC8h8CjrEeuwZIBxxK9icg" name="open" target="_5XDxACjoEeuwZIBxxK9icg" source="_dVtpUCjsEeuwZIBxxK9icg"/>
@@ -12,13 +12,21 @@
     <edge xmi:type="uml:ControlFlow" xmi:id="_-0p6wCjrEeuwZIBxxK9icg" target="_hh3WICjrEeuwZIBxxK9icg" source="_0yRP0CjrEeuwZIBxxK9icg"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_JhcNkCjsEeuwZIBxxK9icg" name="save" target="_GkabwCjsEeuwZIBxxK9icg" source="_dVtpUCjsEeuwZIBxxK9icg"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_Xgm3ICjsEeuwZIBxxK9icg" target="_PsEj0CjsEeuwZIBxxK9icg" source="_GkabwCjsEeuwZIBxxK9icg"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_Ylk7ICjsEeuwZIBxxK9icg" target="_SNL1sCjsEeuwZIBxxK9icg" source="_PsEj0CjsEeuwZIBxxK9icg"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_k2AK8CjsEeuwZIBxxK9icg" target="_dVtpUCjsEeuwZIBxxK9icg" source="_SNL1sCjsEeuwZIBxxK9icg"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_sz51oCjsEeuwZIBxxK9icg" target="_hh3WICjrEeuwZIBxxK9icg" source="_Hj8tgCjpEeuwZIBxxK9icg"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_6xEUECjsEeuwZIBxxK9icg" name="quit" target="_z4hH4CjsEeuwZIBxxK9icg" source="_dVtpUCjsEeuwZIBxxK9icg"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_QSZukCjtEeuwZIBxxK9icg" target="_LUm-4CjtEeuwZIBxxK9icg" source="_z4hH4CjsEeuwZIBxxK9icg"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_TuNuICjtEeuwZIBxxK9icg" name="Nein" target="_dVtpUCjsEeuwZIBxxK9icg" source="_LUm-4CjtEeuwZIBxxK9icg"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_fDKNICjtEeuwZIBxxK9icg" name="Ja" target="_cjz10CjtEeuwZIBxxK9icg" source="_LUm-4CjtEeuwZIBxxK9icg"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_YjM0sCyeEeuutoZBv-DZQg" name="change TextColor" target="_Nko1YCyeEeuutoZBv-DZQg" source="_dVtpUCjsEeuwZIBxxK9icg"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_45bVICyeEeuutoZBv-DZQg" target="_2ZH7kCyeEeuutoZBv-DZQg" source="_Nko1YCyeEeuutoZBv-DZQg"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_9oGDsCyeEeuutoZBv-DZQg" target="_dVtpUCjsEeuwZIBxxK9icg" source="_2ZH7kCyeEeuutoZBv-DZQg"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_WqhmYCyfEeuutoZBv-DZQg" target="_SNL1sCjsEeuwZIBxxK9icg" source="_S9wZsCyfEeuutoZBv-DZQg"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_Xg8RACyfEeuutoZBv-DZQg" target="_S9wZsCyfEeuutoZBv-DZQg" source="_PsEj0CjsEeuwZIBxxK9icg"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_0gkpECyfEeuutoZBv-DZQg" name="change Language" target="_vuhPUCyfEeuutoZBv-DZQg" source="_dVtpUCjsEeuwZIBxxK9icg"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_E-i3YCygEeuutoZBv-DZQg" target="_ACd-8CygEeuutoZBv-DZQg" source="_vuhPUCyfEeuutoZBv-DZQg"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_GOUdMCygEeuutoZBv-DZQg" target="_CTuP4CygEeuutoZBv-DZQg" source="_ACd-8CygEeuutoZBv-DZQg"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_LAvDUCygEeuutoZBv-DZQg" target="_dVtpUCjsEeuwZIBxxK9icg" source="_CTuP4CygEeuutoZBv-DZQg"/>
     <node xmi:type="uml:InitialNode" xmi:id="_llwwwCjoEeuwZIBxxK9icg" name="start" outgoing="_xhh30CjrEeuwZIBxxK9icg"/>
     <node xmi:type="uml:OpaqueAction" xmi:id="_5XDxACjoEeuwZIBxxK9icg" name="SelectionAdapterOpen" incoming="_pC8h8CjrEeuwZIBxxK9icg" outgoing="_U9HRkCjqEeuwZIBxxK9icg"/>
     <node xmi:type="uml:OpaqueAction" xmi:id="_E8qiMCjpEeuwZIBxxK9icg" name="openFileDialog()" incoming="_U9HRkCjqEeuwZIBxxK9icg" outgoing="_bYnVYCjqEeuwZIBxxK9icg"/>
@@ -26,11 +34,17 @@
     <node xmi:type="uml:OpaqueAction" xmi:id="_hh3WICjrEeuwZIBxxK9icg" name="new Window" incoming="_-0p6wCjrEeuwZIBxxK9icg _sz51oCjsEeuwZIBxxK9icg"/>
     <node xmi:type="uml:OpaqueAction" xmi:id="_0yRP0CjrEeuwZIBxxK9icg" name="SelectionAdapterNew" incoming="_8GcoECjrEeuwZIBxxK9icg" outgoing="_-0p6wCjrEeuwZIBxxK9icg"/>
     <node xmi:type="uml:OpaqueAction" xmi:id="_GkabwCjsEeuwZIBxxK9icg" name="selectionAdapterSave" incoming="_JhcNkCjsEeuwZIBxxK9icg" outgoing="_Xgm3ICjsEeuwZIBxxK9icg"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_PsEj0CjsEeuwZIBxxK9icg" name="openFileDialog" incoming="_Xgm3ICjsEeuwZIBxxK9icg" outgoing="_Ylk7ICjsEeuwZIBxxK9icg"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_SNL1sCjsEeuwZIBxxK9icg" name="writeFile" incoming="_Ylk7ICjsEeuwZIBxxK9icg" outgoing="_k2AK8CjsEeuwZIBxxK9icg"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_dVtpUCjsEeuwZIBxxK9icg" name="Window" incoming="_k2AK8CjsEeuwZIBxxK9icg _xhh30CjrEeuwZIBxxK9icg _TuNuICjtEeuwZIBxxK9icg" outgoing="_8GcoECjrEeuwZIBxxK9icg _pC8h8CjrEeuwZIBxxK9icg _JhcNkCjsEeuwZIBxxK9icg _6xEUECjsEeuwZIBxxK9icg"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_PsEj0CjsEeuwZIBxxK9icg" name="openFileDialog" incoming="_Xgm3ICjsEeuwZIBxxK9icg" outgoing="_Xg8RACyfEeuutoZBv-DZQg"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_SNL1sCjsEeuwZIBxxK9icg" name="writeFile" incoming="_WqhmYCyfEeuutoZBv-DZQg" outgoing="_k2AK8CjsEeuwZIBxxK9icg"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_dVtpUCjsEeuwZIBxxK9icg" name="Window" incoming="_k2AK8CjsEeuwZIBxxK9icg _xhh30CjrEeuwZIBxxK9icg _TuNuICjtEeuwZIBxxK9icg _9oGDsCyeEeuutoZBv-DZQg _LAvDUCygEeuutoZBv-DZQg" outgoing="_8GcoECjrEeuwZIBxxK9icg _pC8h8CjrEeuwZIBxxK9icg _JhcNkCjsEeuwZIBxxK9icg _6xEUECjsEeuwZIBxxK9icg _YjM0sCyeEeuutoZBv-DZQg _0gkpECyfEeuutoZBv-DZQg"/>
     <node xmi:type="uml:OpaqueAction" xmi:id="_z4hH4CjsEeuwZIBxxK9icg" name="SelectionAdapterQuit" incoming="_6xEUECjsEeuwZIBxxK9icg" outgoing="_QSZukCjtEeuwZIBxxK9icg"/>
     <node xmi:type="uml:DecisionNode" xmi:id="_LUm-4CjtEeuwZIBxxK9icg" name="Abbrechen?" incoming="_QSZukCjtEeuwZIBxxK9icg" outgoing="_TuNuICjtEeuwZIBxxK9icg _fDKNICjtEeuwZIBxxK9icg"/>
     <node xmi:type="uml:OpaqueAction" xmi:id="_cjz10CjtEeuwZIBxxK9icg" name="shell.dispose()" incoming="_fDKNICjtEeuwZIBxxK9icg"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_Nko1YCyeEeuutoZBv-DZQg" name="SelectionAdapterTextColor" incoming="_YjM0sCyeEeuutoZBv-DZQg" outgoing="_45bVICyeEeuutoZBv-DZQg"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_2ZH7kCyeEeuutoZBv-DZQg" name="setTextColor" incoming="_45bVICyeEeuutoZBv-DZQg" outgoing="_9oGDsCyeEeuutoZBv-DZQg"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_S9wZsCyfEeuutoZBv-DZQg" name="save Color" incoming="_Xg8RACyfEeuutoZBv-DZQg" outgoing="_WqhmYCyfEeuutoZBv-DZQg"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_vuhPUCyfEeuutoZBv-DZQg" name="ModifyListenerLanguages" incoming="_0gkpECyfEeuutoZBv-DZQg" outgoing="_E-i3YCygEeuutoZBv-DZQg"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_ACd-8CygEeuutoZBv-DZQg" name="changeLanguage()" incoming="_E-i3YCygEeuutoZBv-DZQg" outgoing="_GOUdMCygEeuutoZBv-DZQg"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_CTuP4CygEeuutoZBv-DZQg" name="setText()" incoming="_GOUdMCygEeuutoZBv-DZQg" outgoing="_LAvDUCygEeuutoZBv-DZQg"/>
   </packagedElement>
 </uml:Model>
