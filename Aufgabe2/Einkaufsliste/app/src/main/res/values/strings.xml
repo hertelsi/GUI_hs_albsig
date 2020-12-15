@@ -10,4 +10,15 @@
     <string name="menu_lists">Einkaufslisten</string>
     <string name="menu_login">Login</string>
     <string name="menu_settings">Einstellungen</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Login</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>
