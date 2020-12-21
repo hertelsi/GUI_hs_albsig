@@ -4,6 +4,16 @@ drop table benutzer cascade constraints purge;
 drop table liste2benutzer cascade constraints purge;
 drop table shop cascade constraints purge;
 
+drop sequence shopSequence;
+drop sequence einkaufslisteSequence;
+drop sequence benutzerSequence;
+drop sequence artikelSequence;
+
+create sequence shopSequence;
+create sequence einkaufslisteSequence;
+create sequence benutzerSequence;
+create sequence artikelSequence;
+
 create table shop(
     id smallint primary key,
     name varchar2(30),
@@ -24,7 +34,7 @@ create table artikel (
     mengeEinheit varchar2(30),
     menge int,
     einkaufslisteId references einkaufsliste
-); 
+);
    
 create table benutzer(
     id smallint primary key,
@@ -68,3 +78,5 @@ select * from liste2benutzer;
 select * from artikel;
 select * from benutzer;
 select * from shop;
+
+commit;

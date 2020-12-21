@@ -1,19 +1,30 @@
 package com.example.einkaufsliste.ui.lists;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import android.util.Log;
+
+import com.example.einkaufsliste.models.BuyingList;
+import com.example.einkaufsliste.ui.sampleData.SampleData;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.lifecycle.ViewModel;
 
 public class HomeViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private List<BuyingList> buyingLists;
 
     public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        buyingLists = new ArrayList<>();
+        buyingLists.addAll(SampleData.getBuyingLists());
+
+        for (BuyingList buyingList : buyingLists){
+            Log.i("plainOldBuyingLists", buyingList.toString());
+        }
+
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public List<BuyingList> getBuyingLists() {
+        return buyingLists;
     }
 }
