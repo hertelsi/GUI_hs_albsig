@@ -1,6 +1,7 @@
 package com.example.einkaufsliste.ui.sampleData;
 
 import com.example.einkaufsliste.models.BuyingList;
+import com.example.einkaufsliste.models.User;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,6 +20,8 @@ public class SampleData {
     private static final String BUYINGLIST_8 = "Ikeaeinkauf";
     private static final String BUYINGLIST_9 = "Einkauf auf dem Markt";
     private static final String BUYINGLIST_10 = "Klamottenshoppingtour";
+
+    private static List<User> user = new ArrayList<>();
 
     private static Date getDate(int diff){
         GregorianCalendar cal = new GregorianCalendar();
@@ -40,4 +43,21 @@ public class SampleData {
         buyingLists.add(new BuyingList(10, BUYINGLIST_10,  getDate(-9)));
         return buyingLists;
     }
+
+    public static List<User> getUser(){
+        return user;
+    }
+
+    public static void addUser(User u){
+        user.add(u);
+    }
+
+    public static List<String> getUserNames(){
+        List<String> result = new ArrayList<>();
+        for (User user : getUser()){
+            result.add(user.getUsername());
+        }
+        return result;
+    }
+
 }
