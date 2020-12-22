@@ -1,9 +1,18 @@
-
 drop table einkaufsliste cascade constraints purge;
 drop table artikel cascade constraints purge;
 drop table benutzer cascade constraints purge;
 drop table liste2benutzer cascade constraints purge;
 drop table shop cascade constraints purge;
+
+drop sequence shopSequence;
+drop sequence einkaufslisteSequence;
+drop sequence benutzerSequence;
+drop sequence artikelSequence;
+
+create sequence shopSequence;
+create sequence einkaufslisteSequence;
+create sequence benutzerSequence;
+create sequence artikelSequence;
 
 create table shop(
     id smallint primary key,
@@ -25,7 +34,7 @@ create table artikel (
     mengeEinheit varchar2(30),
     menge int,
     einkaufslisteId references einkaufsliste
-); 
+);
    
 create table benutzer(
     id smallint primary key,
@@ -34,9 +43,9 @@ create table benutzer(
 );
 
 create table liste2benutzer(
-    id smallint primary key,
     benutzerId references benutzer,
-    einkaufslisteId references einkaufsliste
+    einkaufslisteId references einkaufsliste,
+    unique(benutzerId, einkaufslisteId)
 );
 
 
@@ -57,14 +66,17 @@ insert into artikel values(6,'Säge','Stk',3,2);
 insert into benutzer values(1,'Julian','123');
 insert into benutzer values(2,'Simon','123');
 
-insert into liste2benutzer values(1,1,1);
-insert into liste2benutzer values(2,2,1);
-insert into liste2benutzer values(3,1,2);
-insert into liste2benutzer values(4,2,2);
+insert into liste2benutzer values(1,1);
+insert into liste2benutzer values(2,1);
+insert into liste2benutzer values(1,2);
+insert into liste2benutzer values(2,2);
 
 
 
 select * from einkaufsliste;
+select * from liste2benutzer;
 select * from artikel;
 select * from benutzer;
 select * from shop;
+
+commit;
