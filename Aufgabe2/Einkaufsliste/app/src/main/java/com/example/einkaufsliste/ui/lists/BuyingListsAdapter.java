@@ -85,7 +85,7 @@ public class BuyingListsAdapter extends RecyclerView.Adapter<BuyingListsAdapter.
 
         public void remove(int position) {
             buyingLists.remove(position);
-            notifyItemRemoved(position);
+            notifyDataSetChanged();
         }
 
     }
