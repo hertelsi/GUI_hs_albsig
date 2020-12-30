@@ -14,7 +14,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.einkaufsliste.LoginRepository;
+import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
+import com.google.android.material.navigation.NavigationView;
 
 public class LoginFragment extends Fragment {
 
@@ -30,7 +32,9 @@ public class LoginFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         View root = inflater.inflate(R.layout.fragment_login, container, false);
-        View header = inflater.inflate(R.layout.nav_header_main, container, false);
+        View main = inflater.inflate(R.layout.activity_main, container, false);
+        NavigationView navView = main.findViewById(R.id.nav_view);
+        View header = navView.getHeaderView(0);
         btnLogin = root.findViewById(R.id.login);
         btnRegister = root.findViewById(R.id.register);
         tvResult = root.findViewById(R.id.loginError);
@@ -60,7 +64,6 @@ public class LoginFragment extends Fragment {
                 loginViewModel.register(etUser.getText().toString(), etPassword.getText().toString());
             }
         });
-
 
         return root;
     }
