@@ -47,12 +47,15 @@ public class LoginRepository {
     }
 
     public int register(String username, String password){
+        if (!username.matches("^[a-zA-Z0-9]*$") || username.equals(""))
+            return INVALID_USER;
+        if (password.length()<3)
+            return INVALID_PASSWORD;
         if (!SampleData.getUserNames().contains(username)){
             SampleData.addUser(new User(1,username,password));
             return REGISTER_SUCCEED;
-        } else {
+        } else
             return USER_ALREADY_EXIST;
-        }
     }
 
     public void logout() {

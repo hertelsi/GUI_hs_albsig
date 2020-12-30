@@ -32,9 +32,12 @@ public class LoginViewModel extends ViewModel {
 
     public void register(String username, String password){
         int result = LoginRepository.getInstance().register(username,password);
-        if (result==LoginRepository.REGISTER_SUCCEED){
+        if (result==LoginRepository.REGISTER_SUCCEED)
             resultMsg.setValue("register succeed");
-        }
+        else if (result==LoginRepository.INVALID_PASSWORD)
+            resultMsg.setValue("password must consist of 3 characters");
+        else if (result==LoginRepository.INVALID_USER)
+            resultMsg.setValue("only numbers and letters ar allowed for username");
         else {
             resultMsg.setValue("User already exist");
         }
