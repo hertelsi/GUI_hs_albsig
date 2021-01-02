@@ -1,14 +1,32 @@
 package com.example.einkaufsliste.models;
 
-public class User {
+import java.io.Serializable;
+import java.util.Collection;
+
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String username;
     private String password;
-    private int id;
+    private long id;
+    private Collection<BuyingList> buyingLists;
 
-    public User(int id, String username, String password) {
+    public User( String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(String username, String password, long id) {
         this.username = username;
         this.password = password;
         this.id = id;
+    }
+
+    public Collection<BuyingList> getBuyingLists() {
+        return buyingLists;
+    }
+
+    public void setBuyingLists(Collection<BuyingList> buyingLists) {
+        this.buyingLists = buyingLists;
     }
 
     public String getUsername() {
@@ -19,7 +37,7 @@ public class User {
         return password;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -37,9 +55,8 @@ public class User {
 
     @Override
     public String toString(){
-        return "User{" +
-                "id=" + id +
+        return "User[" +
                 ", username='" + username +
-                '}';
+                ']';
     }
 }
