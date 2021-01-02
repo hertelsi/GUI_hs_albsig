@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.einkaufsliste.LoginRepository;
+import com.example.einkaufsliste.rest.IllegalCreateException;
+import com.example.einkaufsliste.rest.NoSuchRowException;
 
 public class LoginViewModel extends ViewModel {
 
@@ -18,7 +20,7 @@ public class LoginViewModel extends ViewModel {
         return resultMsg;
     }
 
-    public void login(String username, String password){
+    public void login(String username, String password) throws  NoSuchRowException {
         int result = LoginRepository.getInstance().login(username,password);
         if (result==LoginRepository.LOGIN_SUCCEED){
             resultMsg.setValue("password correct");

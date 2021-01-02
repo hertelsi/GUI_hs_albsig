@@ -23,7 +23,7 @@ public class SampleData {
 
     private static List<User> user = new ArrayList<>();
 
-    private static Date getDate(int diff){
+    public static Date getDate(int diff){
         GregorianCalendar cal = new GregorianCalendar();
         cal.add(Calendar.MILLISECOND, diff);
         return cal.getTime();

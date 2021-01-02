@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.einkaufsliste.LoginRepository;
 import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
+import com.example.einkaufsliste.rest.IllegalCreateException;
+import com.example.einkaufsliste.rest.NoSuchRowException;
 import com.google.android.material.navigation.NavigationView;
 
 public class LoginFragment extends Fragment {
@@ -51,7 +53,11 @@ public class LoginFragment extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginViewModel.login(etUser.getText().toString(), etPassword.getText().toString());
+                try {
+                    loginViewModel.login(etUser.getText().toString(), etPassword.getText().toString());
+                } catch ( NoSuchRowException e) {
+                    e.printStackTrace();
+                }
                 if (LoginRepository.getInstance().getUser()!=null){
                     tvUsername.setText(LoginRepository.getInstance().getUser().getUsername());
                 }
