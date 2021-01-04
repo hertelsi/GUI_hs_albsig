@@ -5,18 +5,18 @@ import java.util.Collection;
 
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String username;
+    private String name;
     private String password;
     private long id;
     private Collection<BuyingList> buyingLists;
 
-    public User( String username, String password) {
-        this.username = username;
+    public User(String name, String password) {
+        this.name = name;
         this.password = password;
     }
 
-    public User(String username, String password, long id) {
-        this.username = username;
+    public User(String name, String password, long id) {
+        this.name = name;
         this.password = password;
         this.id = id;
     }
@@ -29,8 +29,8 @@ public class User implements Serializable {
         this.buyingLists = buyingLists;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
     public String getPassword() {
@@ -45,8 +45,8 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPassword(String password) {
@@ -56,7 +56,7 @@ public class User implements Serializable {
     @Override
     public String toString(){
         return "User[" +
-                ", username='" + username +
+                ", username='" + name +
                 ']';
     }
 }
