@@ -9,14 +9,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.einkaufsliste.LoginRepository;
-import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
-import com.example.einkaufsliste.rest.IllegalCreateException;
 import com.example.einkaufsliste.rest.NoSuchRowException;
 import com.google.android.material.navigation.NavigationView;
 
@@ -29,6 +28,10 @@ public class LoginFragment extends Fragment {
     private EditText etUser;
     private EditText etPassword;
     private TextView tvUsername;
+    private ConstraintLayout layoutLogin;
+    private ConstraintLayout layoutLogout;
+    private TextView tvLogout;
+    private Button btnLogout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,9 +46,25 @@ public class LoginFragment extends Fragment {
         etUser = root.findViewById(R.id.username);
         etPassword = root.findViewById(R.id.password);
         tvUsername = header.findViewById(R.id.tvUsername);
+        layoutLogin = root.findViewById(R.id.layoutLogin);
+        layoutLogout = root.findViewById(R.id.layoutLogout);
+        tvLogout = root.findViewById(R.id.tvLogout);
+        btnLogout = root.findViewById(R.id.logout);
+
+        if (LoginRepository.getInstance().getUser() != null){
+            tvLogout.setText(LoginRepository.getInstance().getUser().getName());
+            layoutLogin.setVisibility(View.INVISIBLE);
+            layoutLogout.setVisibility(View.VISIBLE);
+        }
+
         loginViewModel.getResultMsg().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                if (s.equals("login succeed")){
+                    tvLogout.setText(LoginRepository.getInstance().getUser().getName());
+                    layoutLogin.setVisibility(View.INVISIBLE);
+                    layoutLogout.setVisibility(View.VISIBLE);
+                }
                 tvResult.setText(s);
             }
         });
@@ -53,13 +72,9 @@ public class LoginFragment extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    loginViewModel.login(etUser.getText().toString(), etPassword.getText().toString());
-                } catch ( NoSuchRowException e) {
-                    e.printStackTrace();
-                }
+                loginViewModel.login(etUser.getText().toString(), etPassword.getText().toString());
                 if (LoginRepository.getInstance().getUser()!=null){
-                    tvUsername.setText(LoginRepository.getInstance().getUser().getUsername());
+                    tvUsername.setText(LoginRepository.getInstance().getUser().getName());
                 }
             }
         });
@@ -68,6 +83,16 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 loginViewModel.register(etUser.getText().toString(), etPassword.getText().toString());
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginViewModel.logout();
+                layoutLogout.setVisibility(View.INVISIBLE);
+                layoutLogin.setVisibility(View.VISIBLE);
+                tvResult.setText("");
             }
         });
 

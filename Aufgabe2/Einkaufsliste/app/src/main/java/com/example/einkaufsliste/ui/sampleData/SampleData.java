@@ -55,7 +55,7 @@ public class SampleData {
     public static List<String> getUserNames(){
         List<String> result = new ArrayList<>();
         for (User user : getUser()){
-            result.add(user.getUsername());
+            result.add(user.getName());
         }
         return result;
     }

@@ -1,7 +1,5 @@
 package com.example.einkaufsliste.rest;
 
-import android.util.Log;
-
 import com.example.einkaufsliste.LoginRepository;
 import com.example.einkaufsliste.models.Article;
 import com.example.einkaufsliste.models.BuyingList;
@@ -11,13 +9,9 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -64,7 +58,7 @@ public class InfrastructureWebservice {
         OkHttpClient client = new OkHttpClient();
         String json = gson.toJson(u);
         RequestBody body = new FormBody.Builder()
-                .add("name", u.getUsername())
+                .add("name", u.getName())
                 .add("password", u.getPassword())
                 .build();
         Request request = new Request.Builder()
@@ -76,7 +70,7 @@ public class InfrastructureWebservice {
             response = client.newCall(request).execute();
             String responseMsg = response.body().string();
             if (response.code() == 200) {
-                //TODO set User
+                u = gson.fromJson(responseMsg, User.class);
                 return u;
             }
         } catch (IOException e) {
@@ -90,7 +84,7 @@ public class InfrastructureWebservice {
         OkHttpClient client = new OkHttpClient();
         String json = gson.toJson(u);
         RequestBody body = new FormBody.Builder()
-                .add("name", u.getUsername())
+                .add("name", u.getName())
                 .add("password", u.getPassword())
                 .build();
         Request request = new Request.Builder()
@@ -102,7 +96,7 @@ public class InfrastructureWebservice {
             response = client.newCall(request).execute();
             String responseMsg = response.body().string();
             if (response.code() == 200) {
-                //TODO set ID
+                u = gson.fromJson(responseMsg, User.class);
                 return u;
             }
         } catch (IOException e) {
@@ -141,7 +135,7 @@ public class InfrastructureWebservice {
         User user = LoginRepository.getInstance().getUser();
         RequestBody body = new FormBody.Builder()
                 .add("password", user.getPassword())
-                .add("username", user.getUsername())
+                .add("username", user.getName())
                 .add("name", b.getName())
                 .add("creationDate", String.valueOf(b.getCreationDate().getTime()))
                 .add("buyingDate", String.valueOf(b.getBuyingDate().getTime()))
