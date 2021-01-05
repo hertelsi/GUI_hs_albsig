@@ -1,6 +1,5 @@
 package com.example.einkaufsliste.ui.lists;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,7 +36,7 @@ public class BuyingListsAdapter extends RecyclerView.Adapter<BuyingListsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull FirstViewHolder holder, int position) {
-        String name = buyingLists.get(position).getText();
+        String name = buyingLists.get(position).getName();
         holder.button.setText(name);
 
         holder.button.setOnTouchListener(new View.OnTouchListener() {
