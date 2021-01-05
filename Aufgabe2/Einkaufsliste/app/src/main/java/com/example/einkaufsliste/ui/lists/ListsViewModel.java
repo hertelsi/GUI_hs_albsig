@@ -10,11 +10,11 @@ import java.util.List;
 
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class ListsViewModel extends ViewModel {
 
     private List<BuyingList> buyingLists;
 
-    public HomeViewModel() {
+    public ListsViewModel() {
         buyingLists = new ArrayList<>();
         buyingLists.addAll(SampleData.getBuyingLists());
 

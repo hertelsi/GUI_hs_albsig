@@ -8,11 +8,13 @@ drop sequence shopSequence;
 drop sequence einkaufslisteSequence;
 drop sequence benutzerSequence;
 drop sequence artikelSequence;
+drop sequence liste2benutzerSequence;
 
-create sequence shopSequence;
-create sequence einkaufslisteSequence;
-create sequence benutzerSequence;
-create sequence artikelSequence;
+create sequence shopSequence start with 1 increment by 1;
+create sequence einkaufslisteSequence start with 1 increment by 1;
+create sequence benutzerSequence start with 1 increment by 1;
+create sequence artikelSequence start with 1 increment by 1;
+create sequence liste2benutzerSequence start with 1 increment by 1;
 
 create table shop(
     id smallint primary key,
@@ -43,12 +45,12 @@ create table benutzer(
 );
 
 create table liste2benutzer(
+  id smallint primary key,
     benutzerId references benutzer,
-    einkaufslisteId references einkaufsliste,
-    unique(benutzerId, einkaufslisteId)
+    einkaufslisteId references einkaufsliste
 );
 
-
+/*
 insert into shop values (1,'Bauhaus','Lange Str. 9, 72336 Balingen');
 insert into shop values (2,'Edeka','Im Grund 1, 72469 Meﬂstetten');
 
@@ -71,7 +73,7 @@ insert into liste2benutzer values(2,1);
 insert into liste2benutzer values(1,2);
 insert into liste2benutzer values(2,2);
 
-
+*/
 
 select * from einkaufsliste;
 select * from liste2benutzer;
