@@ -1,6 +1,6 @@
 package com.example.einkaufsliste.rest;
 
-import com.example.einkaufsliste.LoginRepository;
+import com.example.einkaufsliste.Repository;
 import com.example.einkaufsliste.models.Article;
 import com.example.einkaufsliste.models.BuyingList;
 import com.example.einkaufsliste.models.User;
@@ -18,7 +18,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class InfrastructureWebservice {
-    private static final String URL = "http://141.87.68.8:8080/EinkaufsListeRestProject/rest/buyingList" ;
+    private String URL = "http://" +  Repository.getInstance().getIpAddress() + ":8080/EinkaufsListeRestProject/rest/buyingList";
 
     private GsonBuilder gsonBuilder = new GsonBuilder();
     private Gson gson = gsonBuilder.create();
@@ -108,7 +108,7 @@ public class InfrastructureWebservice {
     public int addUserToBuyingList(BuyingList b, String username){
         urlString = URL + "/buyingLists/user";
         OkHttpClient client = new OkHttpClient();
-        User user = LoginRepository.getInstance().getUser();
+        User user = Repository.getInstance().getUser();
         RequestBody body = new FormBody.Builder()
                 .add("buyingListId", String.valueOf(b.getId()))
                 .add("username", username)
@@ -132,7 +132,7 @@ public class InfrastructureWebservice {
     public int addBuyingList(BuyingList b){
         urlString = URL + "/buyingLists";
         OkHttpClient client = new OkHttpClient();
-        User user = LoginRepository.getInstance().getUser();
+        User user = Repository.getInstance().getUser();
         RequestBody body = new FormBody.Builder()
                 .add("password", user.getPassword())
                 .add("username", user.getName())
@@ -162,7 +162,7 @@ public class InfrastructureWebservice {
     public int addArticle(Article a){
         urlString = URL + "/articles";
         OkHttpClient client = new OkHttpClient();
-        User user = LoginRepository.getInstance().getUser();
+        User user = Repository.getInstance().getUser();
         RequestBody body = new FormBody.Builder()
                 .add("name", a.getName())
                 .add("unit", a.getUnit())
