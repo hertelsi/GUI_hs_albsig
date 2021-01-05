@@ -8,6 +8,8 @@ import com.example.einkaufsliste.Repository;
 import com.example.einkaufsliste.models.User;
 import com.example.einkaufsliste.rest.InfrastructureWebservice;
 
+import java.net.SocketTimeoutException;
+
 public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<String> resultMsg = new MutableLiveData<>();
@@ -23,7 +25,12 @@ public class LoginViewModel extends ViewModel {
     public void login(String username, String password) {
         InfrastructureWebservice service = new InfrastructureWebservice();
         User u = new User(username,password);
-        u = service.login(u);
+        try {
+            u = service.login(u);
+        } catch (SocketTimeoutException e) {
+            resultMsg.setValue("Timeout: Change IP-Address");
+            return;
+        }
         if (u == null)
             resultMsg.setValue("password not correct");
         else {
@@ -35,7 +42,12 @@ public class LoginViewModel extends ViewModel {
     public void register(String username, String password){
         InfrastructureWebservice service = new InfrastructureWebservice();
         User u = new User(username,password);
-        u = service.register(u);
+        try {
+            u = service.register(u);
+        } catch (SocketTimeoutException e) {
+            resultMsg.setValue("Timeout: Change IP-Address");
+            return;
+        }
         if (u == null)
             resultMsg.setValue("User already exist");
         else
