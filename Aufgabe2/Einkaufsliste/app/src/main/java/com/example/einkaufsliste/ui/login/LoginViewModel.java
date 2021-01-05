@@ -4,11 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.einkaufsliste.LoginRepository;
+import com.example.einkaufsliste.Repository;
 import com.example.einkaufsliste.models.User;
-import com.example.einkaufsliste.rest.IllegalCreateException;
 import com.example.einkaufsliste.rest.InfrastructureWebservice;
-import com.example.einkaufsliste.rest.NoSuchRowException;
 
 public class LoginViewModel extends ViewModel {
 
@@ -29,7 +27,7 @@ public class LoginViewModel extends ViewModel {
         if (u == null)
             resultMsg.setValue("password not correct");
         else {
-            LoginRepository.getInstance().setUser(u);
+            Repository.getInstance().setUser(u);
             resultMsg.setValue("login succeed");
         }
     }
@@ -45,6 +43,6 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void logout(){
-        LoginRepository.getInstance().setUser(null);
+        Repository.getInstance().setUser(null);
     }
 }

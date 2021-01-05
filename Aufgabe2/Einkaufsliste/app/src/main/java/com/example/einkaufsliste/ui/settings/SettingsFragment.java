@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,18 +18,27 @@ import com.example.einkaufsliste.R;
 
 public class SettingsFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private SettingsViewModel settingsViewModel;
+    private EditText ipAddress;
+    private Button save;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        settingsViewModel =
+                new ViewModelProvider(this).get(SettingsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        ipAddress = root.findViewById(R.id.etIpAddress);
+        save = root.findViewById(R.id.saveIp);
+        settingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+                ipAddress.setText(s);
+            }
+        });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                settingsViewModel.setIp(ipAddress.getText().toString());
             }
         });
         return root;
