@@ -4,16 +4,22 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+import com.example.einkaufsliste.Repository;
+
+public class SettingsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public SettingsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue(Repository.getInstance().getIpAddress());
     }
 
     public LiveData<String> getText() {
         return mText;
+    }
+
+    public void setIp(String ip){
+        Repository.getInstance().setIpAddress(ip);
     }
 }
