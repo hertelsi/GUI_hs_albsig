@@ -12,10 +12,12 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
 import com.example.einkaufsliste.models.BuyingList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -87,7 +89,7 @@ public class ListsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new BuyingListsAdapter(listsViewModel.getBuyingLists());
+        adapter = new BuyingListsAdapter(listsViewModel.getBuyingLists(), ((MainActivity)getActivity()));
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

@@ -17,8 +17,8 @@ public class ListsViewModel extends ViewModel {
 
     public ListsViewModel() {
         buyingLists = new ArrayList<>();
-        //buyingLists.addAll(SampleData.getBuyingLists());
-        buyingLists.addAll(Repository.getInstance().getUser().getBuyingLists());
+        buyingLists.addAll(SampleData.getBuyingLists());
+        //buyingLists.addAll(Repository.getInstance().getUser().getBuyingLists());
         for (BuyingList buyingList : buyingLists){
             Log.i("plainOldBuyingLists", buyingList.toString());
         }

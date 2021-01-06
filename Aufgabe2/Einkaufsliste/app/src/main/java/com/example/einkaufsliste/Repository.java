@@ -16,6 +16,16 @@ public class Repository {
 
     private String ipAddress = "141.87.68.69";
 
+    private int currentBuyingListId;
+
+    public int getCurrentBuyingListId() {
+        return currentBuyingListId;
+    }
+
+    public void setCurrentBuyingListId(int currentBuyingListId) {
+        this.currentBuyingListId = currentBuyingListId;
+    }
+
     private Repository() {
 
     }
