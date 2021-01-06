@@ -6,21 +6,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.einkaufsliste.ChangeFragmentInterface;
+import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
+import com.example.einkaufsliste.Repository;
 import com.example.einkaufsliste.models.BuyingList;
-
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class BuyingListsAdapter extends RecyclerView.Adapter<BuyingListsAdapter.FirstViewHolder> {
 
     private final List<BuyingList> buyingLists;
+    private final ChangeFragmentInterface changeFragmentInterface;
 
-    public BuyingListsAdapter(List<BuyingList> buyingLists) {
+    public BuyingListsAdapter(List<BuyingList> buyingLists, ChangeFragmentInterface changeFragmentInterface) {
         this.buyingLists = buyingLists;
+        this.changeFragmentInterface = changeFragmentInterface;
     }
 
     @NonNull
@@ -37,6 +45,7 @@ public class BuyingListsAdapter extends RecyclerView.Adapter<BuyingListsAdapter.
     @Override
     public void onBindViewHolder(@NonNull FirstViewHolder holder, int position) {
         String name = buyingLists.get(position).getName();
+        int buyingListId = buyingLists.get(position).getId();
         holder.button.setText(name);
 
         holder.button.setOnTouchListener(new View.OnTouchListener() {
@@ -53,7 +62,8 @@ public class BuyingListsAdapter extends RecyclerView.Adapter<BuyingListsAdapter.
                         holder.remove(position);
                         return true;
                     } else {
-                        // TODO functionality to navigate to selected buyinglist
+                        Repository.getInstance().setCurrentBuyingListId(buyingListId);
+                        changeFragmentInterface.changeFragment(R.id.nav_singleList);
                     }
                 }
                 return false;
@@ -84,7 +94,7 @@ public class BuyingListsAdapter extends RecyclerView.Adapter<BuyingListsAdapter.
 
         public void remove(int position) {
             buyingLists.remove(position);
-            notifyItemRemoved(position);
+            notifyDataSetChanged();
         }
 
     }

@@ -2,25 +2,22 @@ package com.example.einkaufsliste.ui.lists;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
 import com.example.einkaufsliste.models.BuyingList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,14 +27,14 @@ import java.util.Date;
 
 public class ListsFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private ListsViewModel listsViewModel;
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
     private BuyingListsAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        listsViewModel = new ViewModelProvider(this).get(ListsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_lists, container, false);
 
         recyclerView = root.findViewById(R.id.recycler_view);
@@ -56,13 +53,9 @@ public class ListsFragment extends Fragment {
     }
 
     private void inflateAddBuyingListDialog(@NonNull View root) {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
-        //builder.setTitle(R.string.buyinglist_creation);
-
         View viewInflated = LayoutInflater.from(root.getContext()).inflate(R.layout.add_buyinglist_dialog, (ViewGroup) getView(), false);
         builder.setView(viewInflated);
-
         builder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -74,7 +67,7 @@ public class ListsFragment extends Fragment {
                     Date date = getDateFromDatePicker(datePicker);
 
                     if ((name != null) && (date != null)){
-                        homeViewModel.getBuyingLists().add(new BuyingList(name, date));
+                        listsViewModel.getBuyingLists().add(new BuyingList(name, date));
                         adapter.notifyDataSetChanged();
                         dialog.cancel();
                     }
@@ -96,7 +89,7 @@ public class ListsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new BuyingListsAdapter(homeViewModel.getBuyingLists());
+        adapter = new BuyingListsAdapter(listsViewModel.getBuyingLists(), ((MainActivity)getActivity()));
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

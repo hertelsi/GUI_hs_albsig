@@ -2,6 +2,7 @@ package com.example.einkaufsliste.ui.lists;
 
 import android.util.Log;
 
+import com.example.einkaufsliste.Repository;
 import com.example.einkaufsliste.models.BuyingList;
 import com.example.einkaufsliste.ui.sampleData.SampleData;
 
@@ -10,14 +11,14 @@ import java.util.List;
 
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class ListsViewModel extends ViewModel {
 
     private List<BuyingList> buyingLists;
 
-    public HomeViewModel() {
+    public ListsViewModel() {
         buyingLists = new ArrayList<>();
         buyingLists.addAll(SampleData.getBuyingLists());
-
+        //buyingLists.addAll(Repository.getInstance().getUser().getBuyingLists());
         for (BuyingList buyingList : buyingLists){
             Log.i("plainOldBuyingLists", buyingList.toString());
         }
