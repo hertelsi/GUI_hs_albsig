@@ -28,6 +28,9 @@
 
     <string name="ipAddress">IP-Adresse</string>
     <string name="save">speichern</string>
+    <string name="addUser">Benutzer hinzufügen</string>
+    <string name="userNotExist">Benutzer existiert nicht!</string>
+    <string name="addedUser">Benutzer hinzugefügt</string>
 
     <string name="username">Username</string>
     <string name="password">Password</string>
