@@ -14,7 +14,7 @@ public class Repository {
 
     private User user = null;
 
-    private String ipAddress = "141.87.68.8";
+    private String ipAddress = "141.87.68.69";
 
     private Repository() {
 
