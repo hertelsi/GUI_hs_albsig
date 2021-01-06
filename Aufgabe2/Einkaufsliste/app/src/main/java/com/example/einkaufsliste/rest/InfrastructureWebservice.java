@@ -114,12 +114,12 @@ public class InfrastructureWebservice {
         return null;
     }
 
-    public int addUserToBuyingList(BuyingList b, String username){
+    public int addUserToBuyingList(int buyingListId, String username){
         urlString = URL + "/buyingLists/user";
         OkHttpClient client = new OkHttpClient();
         User user = Repository.getInstance().getUser();
         RequestBody body = new FormBody.Builder()
-                .add("buyingListId", String.valueOf(b.getId()))
+                .add("buyingListId", String.valueOf(buyingListId))
                 .add("username", username)
                 .build();
         Request request = new Request.Builder()
