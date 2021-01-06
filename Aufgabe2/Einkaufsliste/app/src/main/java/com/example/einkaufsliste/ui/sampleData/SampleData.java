@@ -21,6 +21,9 @@ public class SampleData {
     private static final String BUYINGLIST_9 = "Einkauf auf dem Markt";
     private static final String BUYINGLIST_10 = "Klamottenshoppingtour";
 
+    private static final String ListData_1 = "Banane";
+    private static final String ListData_2 = "Apfel";
+
     private static List<User> user = new ArrayList<>();
 
     public static Date getDate(int diff){
@@ -60,4 +63,10 @@ public class SampleData {
         return result;
     }
 
+    public static ArrayList<String> getListData(){
+        ArrayList<String> DataList = new ArrayList<>();
+        DataList.add(ListData_1);
+        DataList.add(ListData_2);
+        return DataList;
+    }
 }

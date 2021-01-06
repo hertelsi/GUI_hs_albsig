@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URLConnection;
 
 import okhttp3.FormBody;
@@ -53,7 +54,7 @@ public class InfrastructureWebservice {
         return null;
     }
 
-    public User register(User u)  {
+    public User register(User u) throws SocketTimeoutException {
         urlString = URL + "/register";
         OkHttpClient client = new OkHttpClient();
         String json = gson.toJson(u);
@@ -75,11 +76,15 @@ public class InfrastructureWebservice {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            if(e.getClass() == SocketTimeoutException.class)
+            {
+                throw new SocketTimeoutException();
+            }
         }
         return null;
     }
 
-    public User login(User u)  {
+    public User login(User u) throws SocketTimeoutException {
         urlString = URL + "/login";
         OkHttpClient client = new OkHttpClient();
         String json = gson.toJson(u);
@@ -101,6 +106,10 @@ public class InfrastructureWebservice {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            if(e.getClass() == SocketTimeoutException.class)
+            {
+                throw new SocketTimeoutException();
+            }
         }
         return null;
     }

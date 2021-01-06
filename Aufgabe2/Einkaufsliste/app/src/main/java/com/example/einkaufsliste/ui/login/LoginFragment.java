@@ -63,6 +63,12 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginViewModel.login(etUser.getText().toString(), etPassword.getText().toString());
+            }
+        });
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
