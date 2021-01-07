@@ -13,16 +13,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.einkaufsliste.R;
+import com.example.einkaufsliste.models.ListData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.FirstViewHolder> {
-    private ArrayList<String> liste;
+    private List<ListData> liste;
 
 
 
     // Daten werden von der Activity hineingereicht
-    public ListDataAdapter(ArrayList<String> liste) {
+    public ListDataAdapter(List<ListData> liste) {
         this.liste = liste;
     }
 
@@ -39,8 +41,10 @@ public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.FirstV
     @Override
     public void onBindViewHolder(@NonNull FirstViewHolder holder, int position) {
 
-        String name = liste.get(position);
-        holder.button.setText(name);
+        String name = liste.get(position).getText();
+        int menge = liste.get(position).getMenge();
+        String gesamt = menge + " "+ name ;
+        holder.button.setText(gesamt);
 
 
         holder.button.setOnTouchListener(new View.OnTouchListener() {
@@ -57,8 +61,7 @@ public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.FirstV
                         holder.remove(position);
                         return true;
                     } else {
-                        holder.UpdateText(holder.button.getText().toString());
-                        holder.remove(position);
+
 
 
 
@@ -88,7 +91,7 @@ public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.FirstV
             button = v.findViewById(R.id.buyinglist_item_button);
         }
 
-        public void add(int position, String item) {
+        public void add(int position, ListData item) {
             liste.add(position, item);
             Log.d("test", "hallo");
             Log.d("test", liste.toString());
@@ -100,13 +103,7 @@ public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.FirstV
             notifyDataSetChanged();
         }
 
-        public void UpdateText(String t){
-            editText = layout.findViewById(R.id.edit_text_ListData);
-            Log.d("test",t);
-            //editText.setText(t);
-            notifyDataSetChanged();
 
-        }
 
     }
 }

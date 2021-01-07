@@ -3,6 +3,7 @@ package com.example.einkaufsliste.ui.lists;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
+import com.example.einkaufsliste.models.ListData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListDataFragment extends Fragment {
     private FloatingActionButton fab1;
-    private ArrayList<String> content;
+    private List<ListData> content;
     private ListDataAdapter adapter;
     private EditText edit_text_ListData;
     private ListDataViewModel listDataViewModel;
@@ -45,15 +48,13 @@ public class ListDataFragment extends Fragment {
         adapter = new ListDataAdapter(content);
 
         fab1 = root.findViewById(R.id.fabListData);
-        edit_text_ListData = root.findViewById(R.id.edit_text_ListData);
         btnAddUser = root.findViewById(R.id.btnAddUser);
         tvAddUser = root.findViewById(R.id.tvAddUser);
         // fab fuegt Editier-Inhalt der Liste hinzu
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.notifyDataSetChanged();
-                listDataViewModel.getListData().add(edit_text_ListData.getText().toString());
+                inflatelistDataListDialog(view);
                 adapter.notifyDataSetChanged();// Model benachrichtigen
             }
         });
@@ -86,6 +87,48 @@ public class ListDataFragment extends Fragment {
         });
 
         return root;
+    }
+    private void inflatelistDataListDialog(@NonNull View root) {
+
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(root.getContext());
+        //builder.setTitle(R.string.buyinglist_creation);
+
+        View viewInflated = LayoutInflater.from(root.getContext()).inflate(R.layout.add_listdata_dialog, (ViewGroup) getView(), false);
+        builder.setView(viewInflated);
+
+        builder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try{
+                    EditText ListDataName = viewInflated.findViewById(R.id.listData_name);
+                    EditText ListDataMenge = viewInflated.findViewById(R.id.listData_amount);
+
+                    String name = ListDataName.getText().toString();
+                    try {
+                        int menge = Integer.parseInt(ListDataMenge.getText().toString());
+                        Log.d("test", ListDataMenge.getText().toString());
+                        if (name != null){
+                            listDataViewModel.getListData().add(new ListData(name, menge));
+                            adapter.notifyDataSetChanged();
+                            dialog.cancel();
+                        }
+                    }
+                    catch ( Exception e ){
+
+                    }
+
+                } catch (Exception e){
+                    Log.e("criticalErrorInAddBuyingListFunctionality", e.toString());
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
     private void initRecyclerView(View root) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
