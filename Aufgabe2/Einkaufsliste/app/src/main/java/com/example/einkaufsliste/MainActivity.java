@@ -2,10 +2,12 @@ package com.example.einkaufsliste;
 
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.example.einkaufsliste.ui.lists.ListDataFragment;
 import com.example.einkaufsliste.ui.login.LoginFragment;
@@ -28,6 +30,8 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity implements ChangeFragmentInterface{
 
     private AppBarConfiguration mAppBarConfiguration;
+    private TextView tvUsername;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -48,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
     }
 
     @Override
@@ -69,5 +75,19 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
     public void changeFragment(int id) {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         navController.navigate(id);
+    }
+
+    @Override
+    public void setUsernameText(String name){
+        View headerView = navigationView.getHeaderView(0);
+        tvUsername = headerView.findViewById(R.id.tvUsername);
+        tvUsername.setText(name);
+    }
+
+    @Override
+    public void setLoginItemText(String name){
+        Menu menu = navigationView.getMenu();
+        MenuItem nav_login = menu.findItem(R.id.nav_login);
+        nav_login.setTitle(name);
     }
 }
