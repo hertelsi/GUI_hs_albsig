@@ -2,8 +2,6 @@ package com.example.einkaufsliste;
 
 import com.example.einkaufsliste.models.User;
 
-import java.util.ArrayList;
-
 public class Repository {
 
     public static final int INVALID_USER = 100;
@@ -63,17 +61,5 @@ public class Repository {
 
     public void setRunPollingThread(Boolean runPollingThread) {
         this.runPollingThread = runPollingThread;
-    }
-
-    public ArrayList<String> getUnitList(){
-        ArrayList<String> result = new ArrayList<>();
-        result.add("Kg");
-        result.add("Liter");
-        result.add("Stück");
-        result.add("Kasten");
-        result.add("Flaschen");
-        result.add("g");
-        return result;
-
     }
 }

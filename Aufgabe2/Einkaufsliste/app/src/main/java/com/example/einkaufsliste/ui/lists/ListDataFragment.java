@@ -7,10 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
-import com.example.einkaufsliste.Repository;
 import com.example.einkaufsliste.models.ListData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -38,7 +35,6 @@ public class ListDataFragment extends Fragment {
     private RecyclerView recyclerView;
     private Button btnAddUser;
     private TextView tvAddUser;
-    private Spinner spinner;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,8 +46,6 @@ public class ListDataFragment extends Fragment {
         initRecyclerView(root);
 
         adapter = new ListDataAdapter(content);
-
-
 
         fab1 = root.findViewById(R.id.fabListData);
         btnAddUser = root.findViewById(R.id.btnAddUser);
@@ -101,12 +95,6 @@ public class ListDataFragment extends Fragment {
 
         View viewInflated = LayoutInflater.from(root.getContext()).inflate(R.layout.add_listdata_dialog, (ViewGroup) getView(), false);
         builder.setView(viewInflated);
-
-        spinner =viewInflated.findViewById(R.id.spinner);
-        ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this.getContext(),
-                android.R.layout.simple_spinner_dropdown_item,
-                Repository.getInstance().getUnitList());
-        spinner.setAdapter(spinnerArrayAdapter);
 
         builder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
             @Override
