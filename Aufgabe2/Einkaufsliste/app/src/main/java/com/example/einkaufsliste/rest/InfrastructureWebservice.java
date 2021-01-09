@@ -1,16 +1,21 @@
 package com.example.einkaufsliste.rest;
 
+import android.util.Log;
+
 import com.example.einkaufsliste.Repository;
 import com.example.einkaufsliste.models.Article;
 import com.example.einkaufsliste.models.BuyingList;
 import com.example.einkaufsliste.models.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URLConnection;
+import java.sql.Date;
+import java.util.ArrayList;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -21,8 +26,7 @@ import okhttp3.Response;
 public class InfrastructureWebservice {
     private String URL = "http://" +  Repository.getInstance().getIpAddress() + ":8080/EinkaufsListeRestProject/rest/buyingList";
 
-    private GsonBuilder gsonBuilder = new GsonBuilder();
-    private Gson gson = gsonBuilder.create();
+    private Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, (JsonDeserializer) (json, typeOfT, context) -> new Date(json.getAsLong())).create();
 
     private java.net.URL url;
     private URLConnection connection;
@@ -72,6 +76,7 @@ public class InfrastructureWebservice {
             String responseMsg = response.body().string();
             if (response.code() == 200) {
                 u = gson.fromJson(responseMsg, User.class);
+
                 return u;
             }
         } catch (IOException e) {
@@ -101,8 +106,10 @@ public class InfrastructureWebservice {
             response = client.newCall(request).execute();
             String responseMsg = response.body().string();
             if (response.code() == 200) {
-                u = gson.fromJson(responseMsg, User.class);
-                return u;
+                User newUser = gson.fromJson(responseMsg, User.class);
+                Log.i("User", u.toString());
+                Log.i("UserResponse", responseMsg);
+                return newUser;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -114,7 +121,7 @@ public class InfrastructureWebservice {
         return null;
     }
 
-    public int addUserToBuyingList(int buyingListId, String username){
+    public int addUserToBuyingList(long buyingListId, String username){
         urlString = URL + "/buyingLists/user";
         OkHttpClient client = new OkHttpClient();
         User user = Repository.getInstance().getUser();
@@ -148,8 +155,6 @@ public class InfrastructureWebservice {
                 .add("name", b.getName())
                 .add("creationDate", String.valueOf(b.getCreationDate().getTime()))
                 .add("buyingDate", String.valueOf(b.getBuyingDate().getTime()))
-                .add("shopName", b.getShop().getName())
-                .add("shopLocation", b.getShop().getLocation())
                 .build();
         Request request = new Request.Builder()
                 .url(urlString)

@@ -1,8 +1,10 @@
 package com.example.einkaufsliste.models;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
+import java.sql.Date;
+import java.util.GregorianCalendar;
 
 public class BuyingList  implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -11,28 +13,38 @@ public class BuyingList  implements Serializable {
     private Date creationDate;
     private Date buyingDate;
     private Collection<Article> allArticles;
-    private Shop shop;
 
-    public BuyingList(int id, String name, Date creationDate, Date buyingDate, Collection<Article> allArticles, Shop shop) {
+    public BuyingList(int id, String name, Date creationDate, Date buyingDate, Collection<Article> allArticles) {
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
         this.buyingDate = buyingDate;
         this.allArticles = allArticles;
-        this.shop = shop;
     }
 
-    public BuyingList(int id, String name, Date date) {
+    public BuyingList(int id, String name, Date buyingDate, Date creationDate) {
         this.id = id;
         this.name = name;
-        this.creationDate = date;
+        this.buyingDate = buyingDate;
     }
 
-    public BuyingList(String name, Date date) {
+    public BuyingList(String name, Date buyingDate, Date creationDate) {
         this.name = name;
-        this.creationDate = date;
+        this.buyingDate = buyingDate;
+        this.creationDate = creationDate;
     }
 
+    public BuyingList(String name, Date buyingDate) {
+        this.name = name;
+        this.buyingDate = buyingDate;
+        this.creationDate = getCurrentDate();
+    }
+
+    private Date getCurrentDate(){
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.add(Calendar.MILLISECOND, 0);
+        return new Date(cal.getTimeInMillis());
+    }
 
     public Date getCreationDate() {
         return creationDate;
@@ -57,20 +69,6 @@ public class BuyingList  implements Serializable {
     public void setAllArticles(Collection<Article> allArticles) {
         this.allArticles = allArticles;
     }
-
-    public Shop getShop() {
-        return shop;
-    }
-
-    public void setShop(Shop shop) {
-        this.shop = shop;
-    }
-
-
-
-    public BuyingList() {
-    }
-
 
     public int getId() {
         return id;

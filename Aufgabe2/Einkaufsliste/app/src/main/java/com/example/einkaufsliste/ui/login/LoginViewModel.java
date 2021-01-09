@@ -3,17 +3,18 @@ package com.example.einkaufsliste.ui.login;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.einkaufsliste.Repository;
 import com.example.einkaufsliste.models.User;
 import com.example.einkaufsliste.rest.InfrastructureWebservice;
+import com.example.einkaufsliste.ui.lists.ListsViewModel;
 
 import java.net.SocketTimeoutException;
 
 public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<String> resultMsg = new MutableLiveData<>();
-
 
     public LoginViewModel() {
     }
@@ -35,6 +36,7 @@ public class LoginViewModel extends ViewModel {
             resultMsg.setValue("password not correct");
         else {
             Repository.getInstance().setUser(u);
+            //startThreadForUpdatingTheUser();
             resultMsg.setValue("login succeed");
         }
     }

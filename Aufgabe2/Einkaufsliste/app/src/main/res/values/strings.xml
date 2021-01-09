@@ -15,8 +15,6 @@
     <string name="cancel">Beenden</string>
     <string name="add">Hinzufügen</string>
     <string name="buyinglist_date">Einkaufsdatum einstellen:</string>
-    <string name="shop_selection">Shop auswählen</string>
-
     <string name="menge">Menge</string>
     <string name="listData_item">Produkt eingeben</string>
     <string name="listData_menge">Menge eingeben</string>

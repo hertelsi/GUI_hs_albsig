@@ -21,8 +21,6 @@ import java.util.List;
 public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.FirstViewHolder> {
     private List<ListData> liste;
 
-
-
     // Daten werden von der Activity hineingereicht
     public ListDataAdapter(List<ListData> liste) {
         this.liste = liste;
@@ -60,11 +58,6 @@ public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.FirstV
                         //click on rightdrawable
                         holder.remove(position);
                         return true;
-                    } else {
-
-
-
-
                     }
                 }
                 return false;

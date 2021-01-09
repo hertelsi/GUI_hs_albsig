@@ -3,12 +3,15 @@ package com.example.einkaufsliste.models;
 import java.io.Serializable;
 import java.util.Collection;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     private String name;
     private String password;
     private long id;
-    private Collection<BuyingList> buyingLists;
+    private Collection<BuyingList> allBuyingLists;
 
     public User(String name, String password) {
         this.name = name;
@@ -22,11 +25,11 @@ public class User implements Serializable {
     }
 
     public Collection<BuyingList> getBuyingLists() {
-        return buyingLists;
+        return allBuyingLists;
     }
 
     public void setBuyingLists(Collection<BuyingList> buyingLists) {
-        this.buyingLists = buyingLists;
+        this.allBuyingLists = buyingLists;
     }
 
     public String getName() {
@@ -54,9 +57,12 @@ public class User implements Serializable {
     }
 
     @Override
-    public String toString(){
-        return "User[" +
-                ", username='" + name +
-                ']';
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", id=" + id +
+                ", buyingLists=" + allBuyingLists +
+                '}';
     }
 }

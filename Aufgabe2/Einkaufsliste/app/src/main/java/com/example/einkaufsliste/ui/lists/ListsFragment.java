@@ -12,7 +12,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,8 +22,7 @@ import com.example.einkaufsliste.R;
 import com.example.einkaufsliste.models.BuyingList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.Collection;
 
 public class ListsFragment extends Fragment {
 
@@ -31,12 +30,13 @@ public class ListsFragment extends Fragment {
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
     private BuyingListsAdapter adapter;
+    private AlertDialog.Builder builder;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        listsViewModel = new ViewModelProvider(this).get(ListsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_lists, container, false);
 
+        listsViewModel = new ViewModelProvider(getActivity()).get(ListsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_lists, container, false);
         recyclerView = root.findViewById(R.id.recycler_view);
         initRecyclerView(root);
 
@@ -49,28 +49,28 @@ public class ListsFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+        preapareAndBuildDialog(root);
         return root;
     }
 
     private void inflateAddBuyingListDialog(@NonNull View root) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
+        builder.show();
+    }
+
+    private void preapareAndBuildDialog(View root){
+        builder = new AlertDialog.Builder(root.getContext());
         View viewInflated = LayoutInflater.from(root.getContext()).inflate(R.layout.add_buyinglist_dialog, (ViewGroup) getView(), false);
         builder.setView(viewInflated);
+
         builder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try{
                     EditText buyinglistName = viewInflated.findViewById(R.id.add_buyinglist_dialog_name);
                     DatePicker datePicker = viewInflated.findViewById(R.id.add_buyinglist_dialog_date);
-
-                    String name = buyinglistName.getText().toString();
-                    Date date = getDateFromDatePicker(datePicker);
-
-                    if ((name != null) && (date != null)){
-                        listsViewModel.getBuyingLists().add(new BuyingList(name, date));
-                        adapter.notifyDataSetChanged();
-                        dialog.cancel();
-                    }
+                    listsViewModel.addOneBuyingList(buyinglistName, datePicker);
+                    adapter.notifyDataSetChanged();
+                    dialog.cancel();
                 } catch (Exception e){
                     Log.e("criticalErrorInAddBuyingListFunctionality", e.toString());
                 }
@@ -82,27 +82,21 @@ public class ListsFragment extends Fragment {
                 dialog.cancel();
             }
         });
-        builder.show();
     }
 
     private void initRecyclerView(View root) {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new BuyingListsAdapter(listsViewModel.getBuyingLists(), ((MainActivity)getActivity()));
+        adapter = new BuyingListsAdapter(((MainActivity)getActivity()));
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        listsViewModel.getAllbuyingLists().observe(getViewLifecycleOwner(), new Observer<Collection<BuyingList>>() {
+            @Override
+            public void onChanged(Collection<BuyingList> buyingLists) {
+                adapter.setBuyingLists(buyingLists);
+            }
+        });
     }
-
-    public static Date getDateFromDatePicker(DatePicker datePicker){
-        int day = datePicker.getDayOfMonth();
-        int month = datePicker.getMonth();
-        int year =  datePicker.getYear();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-
-        return calendar.getTime();
-    }
-
 }

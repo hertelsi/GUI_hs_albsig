@@ -6,7 +6,7 @@ import com.example.einkaufsliste.models.User;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -30,9 +30,9 @@ public class SampleData {
     public static Date getDate(int diff){
         GregorianCalendar cal = new GregorianCalendar();
         cal.add(Calendar.MILLISECOND, diff);
-        return cal.getTime();
+        return new Date(cal.getTimeInMillis());
     }
-
+    /*
     public static List<BuyingList> getBuyingLists() {
         List<BuyingList> buyingLists = new ArrayList<>();
         buyingLists.add(new BuyingList(1, BUYINGLIST_1,  getDate(0)));
@@ -47,7 +47,7 @@ public class SampleData {
         buyingLists.add(new BuyingList(10, BUYINGLIST_10,  getDate(-9)));
         return buyingLists;
     }
-
+    */
     public static List<User> getUser(){
         return user;
     }

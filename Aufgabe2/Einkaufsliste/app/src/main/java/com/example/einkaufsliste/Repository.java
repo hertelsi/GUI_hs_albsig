@@ -14,7 +14,9 @@ public class Repository {
 
     private User user = null;
 
-    private String ipAddress = "141.87.68.69";
+    private String ipAddress = "141.87.68.230";
+
+    private Boolean runPollingThread = true;
 
     private int currentBuyingListId;
 
@@ -51,5 +53,13 @@ public class Repository {
 
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
+    }
+
+    public Boolean getRunPollingThread() {
+        return runPollingThread;
+    }
+
+    public void setRunPollingThread(Boolean runPollingThread) {
+        this.runPollingThread = runPollingThread;
     }
 }

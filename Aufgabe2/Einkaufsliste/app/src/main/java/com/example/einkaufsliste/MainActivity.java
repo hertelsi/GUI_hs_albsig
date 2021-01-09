@@ -9,16 +9,27 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.einkaufsliste.models.BuyingList;
+import com.example.einkaufsliste.models.User;
+import com.example.einkaufsliste.rest.InfrastructureWebservice;
 import com.example.einkaufsliste.ui.lists.ListDataFragment;
+import com.example.einkaufsliste.ui.lists.ListsViewModel;
 import com.example.einkaufsliste.ui.login.LoginFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Collection;
+import java.util.Observable;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -53,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        startThreadForUpdatingTheUser();
 
     }
 
@@ -75,6 +87,34 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
     public void changeFragment(int id) {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         navController.navigate(id);
+    }
+
+    private void startThreadForUpdatingTheUser() {
+        ListsViewModel listsViewModel = new ViewModelProvider(this).get(ListsViewModel.class);
+        Thread pollingThreadForUpdates = new Thread() {
+            InfrastructureWebservice service = new InfrastructureWebservice();
+
+            public void run() {
+                while (true) {
+                    if (Repository.getInstance().getRunPollingThread() == true) {
+                        try {
+                            User currentUser = Repository.getInstance().getUser();
+                            if (currentUser != null) {
+
+                                User user = service.login(currentUser);
+                                Repository.getInstance().setUser(user);
+                                listsViewModel.setAllbuyingLists(user.getBuyingLists());
+                            }
+                            sleep(500);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            continue;
+                        }
+                    }
+                }
+            }
+        };
+        pollingThreadForUpdates.start();
     }
 
     @Override
