@@ -11,41 +11,42 @@ import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
 import com.example.einkaufsliste.Repository;
 import com.example.einkaufsliste.models.BuyingList;
-import java.util.GregorianCalendar;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.sql.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class BuyingListsAdapter extends RecyclerView.Adapter<BuyingListsAdapter.FirstViewHolder> {
+public class BuyingListsAdapter extends RecyclerView.Adapter<BuyingListsAdapter.BuyingListHolder> {
 
-    private final List<BuyingList> buyingLists;
-    private final ChangeFragmentInterface changeFragmentInterface;
+    private List<BuyingList> buyingLists = new ArrayList<>();
+    private ChangeFragmentInterface changeFragmentInterface;
+    private ListsViewModel listsViewModel;
 
-    public BuyingListsAdapter(List<BuyingList> buyingLists, ChangeFragmentInterface changeFragmentInterface) {
-        this.buyingLists = buyingLists;
-        this.changeFragmentInterface = changeFragmentInterface;
+    public BuyingListsAdapter(MainActivity mainActivity){
+        this.changeFragmentInterface = (ChangeFragmentInterface) mainActivity;
+        listsViewModel = new ViewModelProvider(mainActivity).get(ListsViewModel.class);
+
     }
 
     @NonNull
     @Override
-    public FirstViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Datendarstellung holen
+    public BuyingListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.buyinglist_item, parent, false);
-        FirstViewHolder viewHolder = new FirstViewHolder(v);
-        return viewHolder;
-
+        View itemView = inflater.inflate(R.layout.buyinglist_item, parent, false);
+        return new BuyingListHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FirstViewHolder holder, int position) {
-        String name = buyingLists.get(position).getName();
-        int buyingListId = buyingLists.get(position).getId();
+    public void onBindViewHolder(@NonNull BuyingListHolder holder, int position) {
+        BuyingList currentBuyingList = buyingLists.get(position);
+        String name = currentBuyingList.getName();
+        int buyingListId = currentBuyingList.getId();
         holder.button.setText(name);
 
         holder.button.setOnTouchListener(new View.OnTouchListener() {
@@ -60,6 +61,7 @@ public class BuyingListsAdapter extends RecyclerView.Adapter<BuyingListsAdapter.
                     if ((leftXDrawable <= event.getRawX()) && (event.getRawX() <= rightXDrawable)){
                         //click on rightdrawable
                         holder.remove(position);
+                        listsViewModel.removeBuyingList(position);
                         return true;
                     } else {
                         Repository.getInstance().setCurrentBuyingListId(buyingListId);
@@ -76,19 +78,27 @@ public class BuyingListsAdapter extends RecyclerView.Adapter<BuyingListsAdapter.
         return buyingLists.size();
     }
 
-    public class FirstViewHolder extends RecyclerView.ViewHolder {
+    public void setBuyingLists(Collection<BuyingList> buyingLists){
+        ArrayList newBuyingList = new ArrayList();
+        for (BuyingList b : buyingLists){
+            newBuyingList.add(b);
+        }
+        this.buyingLists = newBuyingList;
+        notifyDataSetChanged();
+    }
+
+    public class BuyingListHolder extends RecyclerView.ViewHolder {
         private View layout;
         private Button button;
 
-        public FirstViewHolder(View view) {
+        public BuyingListHolder(View view) {
             super(view);
             layout = view;
             button = view.findViewById(R.id.buyinglist_item_button);
         }
 
         public void add(int position, String name) {
-            buyingLists.add(position, new BuyingList(name, new GregorianCalendar().getTime()));
-
+            buyingLists.add(position, new BuyingList(name, new Date(System.currentTimeMillis())));
             notifyItemInserted(position);
         }
 

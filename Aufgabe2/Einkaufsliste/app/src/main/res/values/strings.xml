@@ -15,7 +15,6 @@
     <string name="cancel">Beenden</string>
     <string name="add">Hinzufügen</string>
     <string name="buyinglist_date">Einkaufsdatum einstellen:</string>
-    <string name="shop_selection">Shop auswählen</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

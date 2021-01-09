@@ -20,8 +20,6 @@ public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.FirstV
     private ArrayList<String> liste;
 
 
-
-    // Daten werden von der Activity hineingereicht
     public ListDataAdapter(ArrayList<String> liste) {
         this.liste = liste;
     }

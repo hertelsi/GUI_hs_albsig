@@ -76,7 +76,7 @@ insert into liste2benutzer values(2,2);
 */
 
 select * from einkaufsliste;
-select * from liste2benutzer;
+select * from benutzer_einkaufsliste;
 select * from artikel;
 select * from benutzer;
 select * from shop;
