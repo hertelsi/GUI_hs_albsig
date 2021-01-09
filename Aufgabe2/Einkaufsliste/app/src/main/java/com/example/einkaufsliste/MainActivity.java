@@ -106,9 +106,11 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
                                 User user = service.login(currentUser);
                                 Repository.getInstance().setUser(user);
                                 listsViewModel.setAllbuyingLists(user.getBuyingLists());
-                                listDataViewModel.setAllArticles(user.getBuyingListById(Repository.getInstance().getCurrentBuyingListId()).getAllArticles());
+                                BuyingList b = user.getBuyingListById(Repository.getInstance().getCurrentBuyingListId());
+                                listDataViewModel.setBuyingList(b);
+                                listDataViewModel.setAllArticles(b.getAllArticles());
                             }
-                            sleep(500);
+                            sleep(150);
                         } catch (Exception e) {
                             e.printStackTrace();
                             continue;

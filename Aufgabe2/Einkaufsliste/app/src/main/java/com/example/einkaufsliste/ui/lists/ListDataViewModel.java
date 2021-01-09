@@ -1,8 +1,5 @@
 package com.example.einkaufsliste.ui.lists;
 
-import android.widget.DatePicker;
-import android.widget.EditText;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,15 +7,10 @@ import androidx.lifecycle.ViewModel;
 import com.example.einkaufsliste.Repository;
 import com.example.einkaufsliste.models.Article;
 import com.example.einkaufsliste.models.BuyingList;
-import com.example.einkaufsliste.models.ListData;
 import com.example.einkaufsliste.models.User;
 import com.example.einkaufsliste.rest.InfrastructureWebservice;
-import com.example.einkaufsliste.ui.sampleData.SampleData;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class ListDataViewModel extends ViewModel {
 
@@ -31,7 +23,7 @@ public class ListDataViewModel extends ViewModel {
         service = new InfrastructureWebservice();
         User user = Repository.getInstance().getUser();
         if (user != null) {
-            user.getBuyingListById(Repository.getInstance().getCurrentBuyingListId());
+            buyingList = user.getBuyingListById(Repository.getInstance().getCurrentBuyingListId());
             allArticles.setValue(buyingList.getAllArticles());
         }
 
@@ -40,6 +32,10 @@ public class ListDataViewModel extends ViewModel {
 
     public void setAllArticles(Collection<Article> articles){
         this.allArticles.postValue(articles);
+    }
+
+    public void setBuyingList(BuyingList buyingList) {
+        this.buyingList = buyingList;
     }
 
     public int addUser(String username){
