@@ -1,6 +1,7 @@
 package com.example.einkaufsliste.ui.sampleData;
 
 import com.example.einkaufsliste.models.BuyingList;
+import com.example.einkaufsliste.models.ListData;
 import com.example.einkaufsliste.models.User;
 
 import java.util.ArrayList;
@@ -63,10 +64,12 @@ public class SampleData {
         return result;
     }
 
-    public static ArrayList<String> getListData(){
-        ArrayList<String> DataList = new ArrayList<>();
-        DataList.add(ListData_1);
-        DataList.add(ListData_2);
+    public static List<ListData> getListData(){
+        List<ListData> DataList = new ArrayList<>();
+        DataList.add(new ListData(ListData_1,1));
+        DataList.add(new ListData(ListData_2,1));
+        DataList.add(new ListData(ListData_2,1));
         return DataList;
     }
+
 }
