@@ -14,16 +14,20 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
+import com.example.einkaufsliste.models.Article;
+import com.example.einkaufsliste.models.BuyingList;
 import com.example.einkaufsliste.models.ListData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ListDataFragment extends Fragment {
@@ -41,6 +45,7 @@ public class ListDataFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         listDataViewModel = new ViewModelProvider(this).get(ListDataViewModel.class);
         View root = inflater.inflate(R.layout.fragment_listdata, container, false);
+
 
         recyclerView = root.findViewById(R.id.rec_view_first);
         initRecyclerView(root);
@@ -136,5 +141,12 @@ public class ListDataFragment extends Fragment {
         adapter = new ListDataAdapter(listDataViewModel.getListData());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        listDataViewModel.getAllArticles().observe(getViewLifecycleOwner(), new Observer<Collection<Article>>() {
+            @Override
+            public void onChanged(Collection<Article> articles) {
+                adapter.setArticles(articles);
+            }
+        });
     }
 }

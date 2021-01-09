@@ -10,38 +10,46 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
+import com.example.einkaufsliste.Repository;
+import com.example.einkaufsliste.models.Article;
+import com.example.einkaufsliste.models.BuyingList;
 import com.example.einkaufsliste.models.ListData;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.FirstViewHolder> {
-    private List<ListData> liste;
+public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.ArticleHolder> {
+    private List<Article> articles = new ArrayList<>();
+    private ListDataViewModel listDataViewModel;
 
     // Daten werden von der Activity hineingereicht
-    public ListDataAdapter(List<ListData> liste) {
-        this.liste = liste;
+    public ListDataAdapter(MainActivity mainActivity) {
+        listDataViewModel = new ViewModelProvider(mainActivity).get(ListDataViewModel.class);
     }
 
     @NonNull
     @Override
-    public FirstViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ArticleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Datendarstellung holen
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View v = inflater.inflate(R.layout.buyinglist_item, parent, false);
-        FirstViewHolder viewHolder = new FirstViewHolder(v);
+        ArticleHolder viewHolder = new ArticleHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FirstViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ArticleHolder holder, int position) {
 
-        String name = liste.get(position).getText();
-        int menge = liste.get(position).getMenge();
-        String gesamt = menge + " "+ name ;
+        String name = articles.get(position).getName();
+        long menge = articles.get(position).getAmount();
+        String unit = articles.get(position).getUnit();
+        String gesamt = menge + " "+ unit +" " + name ;
         holder.button.setText(gesamt);
 
 
@@ -57,6 +65,7 @@ public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.FirstV
                     if ((leftXDrawable <= event.getRawX()) && (event.getRawX() <= rightXDrawable)){
                         //click on rightdrawable
                         holder.remove(position);
+                        listDataViewModel.removeArticle(position);
                         return true;
                     }
                 }
@@ -68,31 +77,39 @@ public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.FirstV
 
     @Override
     public int getItemCount() {
-        return liste.size();
+        return articles.size();
     }
 
-    public class FirstViewHolder extends RecyclerView.ViewHolder {
+    public void setArticles(Collection<Article> articles){
+        ArrayList newArticleList = new ArrayList();
+        for (Article a : articles){
+            newArticleList.add(a);
+        }
+        this.articles = newArticleList;
+        notifyDataSetChanged();
+    }
+
+    public class ArticleHolder extends RecyclerView.ViewHolder {
         private View layout;
         private TextView textView;
         private Button button;
         private EditText editText;
 
-        public FirstViewHolder(View v) {
+        public ArticleHolder(View v) {
             super(v);
             layout = v;
             textView = v.findViewById(R.id.buyinglist_item_button);
             button = v.findViewById(R.id.buyinglist_item_button);
         }
 
-        public void add(int position, ListData item) {
-            liste.add(position, item);
-            Log.d("test", "hallo");
-            Log.d("test", liste.toString());
+        public void add(int position, String unit, long amount, String name) {
+            long id = Repository.getInstance().getCurrentBuyingListId();
+            articles.add(position, new Article(unit, amount, name, Repository.getInstance().getUser().getBuyingListById(id)));
             notifyItemInserted(position);
         }
 
         public void remove(int position) {
-            liste.remove(position);
+            articles.remove(position);
             notifyDataSetChanged();
         }
 

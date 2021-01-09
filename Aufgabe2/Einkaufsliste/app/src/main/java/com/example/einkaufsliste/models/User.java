@@ -1,5 +1,7 @@
 package com.example.einkaufsliste.models;
 
+import com.example.einkaufsliste.Repository;
+
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -30,6 +32,15 @@ public class User implements Serializable {
 
     public void setBuyingLists(Collection<BuyingList> buyingLists) {
         this.allBuyingLists = buyingLists;
+    }
+
+    public BuyingList getBuyingListById(long id){
+        for (BuyingList b : allBuyingLists){
+            if (b.getId() == id){
+                return b;
+            }
+        }
+        return null;
     }
 
     public String getName() {
