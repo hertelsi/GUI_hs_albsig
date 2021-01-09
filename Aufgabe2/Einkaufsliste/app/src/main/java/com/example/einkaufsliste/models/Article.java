@@ -19,6 +19,13 @@ public class Article implements Serializable {
         this.buyingList = buyingList;
     }
 
+    public Article(String unit, long amount, String name, BuyingList buyingList) {
+        this.unit = unit;
+        this.amount = amount;
+        this.name = name;
+        this.buyingList = buyingList;
+    }
+
     public BuyingList getBuyingList() {
         return buyingList;
     }

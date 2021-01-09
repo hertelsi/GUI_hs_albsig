@@ -16,17 +16,21 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
+import com.example.einkaufsliste.models.Article;
+import com.example.einkaufsliste.models.BuyingList;
 import com.example.einkaufsliste.Repository;
 import com.example.einkaufsliste.models.ListData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ListDataFragment extends Fragment {
@@ -43,15 +47,11 @@ public class ListDataFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        listDataViewModel = new ViewModelProvider(this).get(ListDataViewModel.class);
+        listDataViewModel = new ViewModelProvider(getActivity()).get(ListDataViewModel.class);
         View root = inflater.inflate(R.layout.fragment_listdata, container, false);
 
         recyclerView = root.findViewById(R.id.rec_view_first);
         initRecyclerView(root);
-
-        adapter = new ListDataAdapter(content);
-
-
 
         fab1 = root.findViewById(R.id.fabListData);
         btnAddUser = root.findViewById(R.id.btnAddUser);
@@ -112,15 +112,16 @@ public class ListDataFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try{
-                    EditText ListDataName = viewInflated.findViewById(R.id.listData_name);
-                    EditText ListDataMenge = viewInflated.findViewById(R.id.listData_amount);
+                    EditText listDataName = viewInflated.findViewById(R.id.listData_name);
+                    EditText listDataAmount = viewInflated.findViewById(R.id.listData_amount);
+                    String listDataUnit = (String) spinner.getSelectedItem();
 
-                    String name = ListDataName.getText().toString();
+                    String name = listDataName.getText().toString();
                     try {
-                        int menge = Integer.parseInt(ListDataMenge.getText().toString());
-                        Log.d("test", ListDataMenge.getText().toString());
+                        int amount = Integer.parseInt(listDataAmount.getText().toString());
+                        Log.d("test", listDataAmount.getText().toString());
                         if (name != null){
-                            listDataViewModel.getListData().add(new ListData(name, menge));
+                            listDataViewModel.addOneArticle(listDataUnit, amount, name);
                             adapter.notifyDataSetChanged();
                             dialog.cancel();
                         }
@@ -145,8 +146,15 @@ public class ListDataFragment extends Fragment {
     private void initRecyclerView(View root) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ListDataAdapter(listDataViewModel.getListData());
+        adapter = new ListDataAdapter(((MainActivity)getActivity()));
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        listDataViewModel.getAllArticles().observe(getViewLifecycleOwner(), new Observer<Collection<Article>>() {
+            @Override
+            public void onChanged(Collection<Article> articles) {
+                adapter.setArticles(articles);
+            }
+        });
     }
 }

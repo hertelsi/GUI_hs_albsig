@@ -13,6 +13,7 @@ import com.example.einkaufsliste.models.BuyingList;
 import com.example.einkaufsliste.models.User;
 import com.example.einkaufsliste.rest.InfrastructureWebservice;
 import com.example.einkaufsliste.ui.lists.ListDataFragment;
+import com.example.einkaufsliste.ui.lists.ListDataViewModel;
 import com.example.einkaufsliste.ui.lists.ListsViewModel;
 import com.example.einkaufsliste.ui.login.LoginFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
 
     private void startThreadForUpdatingTheUser() {
         ListsViewModel listsViewModel = new ViewModelProvider(this).get(ListsViewModel.class);
+        ListDataViewModel listDataViewModel = new ViewModelProvider(this).get(ListDataViewModel.class);
         Thread pollingThreadForUpdates = new Thread() {
             InfrastructureWebservice service = new InfrastructureWebservice();
 
@@ -104,8 +106,11 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
                                 User user = service.login(currentUser);
                                 Repository.getInstance().setUser(user);
                                 listsViewModel.setAllbuyingLists(user.getBuyingLists());
+                                BuyingList b = user.getBuyingListById(Repository.getInstance().getCurrentBuyingListId());
+                                listDataViewModel.setBuyingList(b);
+                                listDataViewModel.setAllArticles(b.getAllArticles());
                             }
-                            sleep(500);
+                            sleep(150);
                         } catch (Exception e) {
                             e.printStackTrace();
                             continue;

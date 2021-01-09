@@ -22,6 +22,8 @@ public class BuyingList  implements Serializable {
         this.allArticles = allArticles;
     }
 
+    public BuyingList(){}
+
     public BuyingList(int id, String name, Date buyingDate, Date creationDate) {
         this.id = id;
         this.name = name;
