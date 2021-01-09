@@ -20,6 +20,8 @@
     <string name="listData_menge">Menge eingeben</string>
     <string name="listData_name">ListDataName</string>
     <string name="listData_amount">ListDataMenge</string>
+    <string name="listData_unit">Einheit eingeben</string>
+    <string name="listData_Typ">ListDataUnit</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
