@@ -2,10 +2,12 @@ package com.example.einkaufsliste;
 
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.example.einkaufsliste.models.BuyingList;
 import com.example.einkaufsliste.models.User;
@@ -39,6 +41,8 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity implements ChangeFragmentInterface{
 
     private AppBarConfiguration mAppBarConfiguration;
+    private TextView tvUsername;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
         NavigationUI.setupWithNavController(navigationView, navController);
 
         startThreadForUpdatingTheUser();
+
     }
 
     @Override
@@ -84,16 +89,17 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
         navController.navigate(id);
     }
 
-    private void startThreadForUpdatingTheUser(){
-        ListsViewModel listsViewModel = new ViewModelProvider(this).get(ListsViewModel .class);
-        Thread pollingThreadForUpdates = new Thread(){
+    private void startThreadForUpdatingTheUser() {
+        ListsViewModel listsViewModel = new ViewModelProvider(this).get(ListsViewModel.class);
+        Thread pollingThreadForUpdates = new Thread() {
             InfrastructureWebservice service = new InfrastructureWebservice();
-            public void run(){
-                while(true){
-                    if (Repository.getInstance().getRunPollingThread() == true){
+
+            public void run() {
+                while (true) {
+                    if (Repository.getInstance().getRunPollingThread() == true) {
                         try {
                             User currentUser = Repository.getInstance().getUser();
-                            if (currentUser != null){
+                            if (currentUser != null) {
 
                                 User user = service.login(currentUser);
                                 Repository.getInstance().setUser(user);
@@ -109,5 +115,19 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
             }
         };
         pollingThreadForUpdates.start();
+    }
+
+    @Override
+    public void setUsernameText(String name){
+        View headerView = navigationView.getHeaderView(0);
+        tvUsername = headerView.findViewById(R.id.tvUsername);
+        tvUsername.setText(name);
+    }
+
+    @Override
+    public void setLoginItemText(String name){
+        Menu menu = navigationView.getMenu();
+        MenuItem nav_login = menu.findItem(R.id.nav_login);
+        nav_login.setTitle(name);
     }
 }

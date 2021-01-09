@@ -15,6 +15,11 @@
     <string name="cancel">Beenden</string>
     <string name="add">Hinzufügen</string>
     <string name="buyinglist_date">Einkaufsdatum einstellen:</string>
+    <string name="menge">Menge</string>
+    <string name="listData_item">Produkt eingeben</string>
+    <string name="listData_menge">Menge eingeben</string>
+    <string name="listData_name">ListDataName</string>
+    <string name="listData_amount">ListDataMenge</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

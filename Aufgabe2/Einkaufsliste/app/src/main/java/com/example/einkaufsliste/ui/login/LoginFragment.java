@@ -2,6 +2,8 @@ package com.example.einkaufsliste.ui.login;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.einkaufsliste.ChangeFragmentInterface;
+import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.Repository;
 import com.example.einkaufsliste.R;
 import com.google.android.material.navigation.NavigationView;
@@ -30,6 +34,7 @@ public class LoginFragment extends Fragment {
     private ConstraintLayout layoutLogout;
     private TextView tvLogout;
     private Button btnLogout;
+    private ChangeFragmentInterface changeFragmentInterface;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +49,8 @@ public class LoginFragment extends Fragment {
         layoutLogout = root.findViewById(R.id.layoutLogout);
         tvLogout = root.findViewById(R.id.tvLogout);
         btnLogout = root.findViewById(R.id.logout);
+        changeFragmentInterface = ((MainActivity)getActivity());
+
 
         if (Repository.getInstance().getUser() != null){
             tvLogout.setText(Repository.getInstance().getUser().getName());
@@ -58,6 +65,8 @@ public class LoginFragment extends Fragment {
                     tvLogout.setText(Repository.getInstance().getUser().getName());
                     layoutLogin.setVisibility(View.INVISIBLE);
                     layoutLogout.setVisibility(View.VISIBLE);
+                    changeFragmentInterface.setUsernameText(Repository.getInstance().getUser().getName());
+                    changeFragmentInterface.setLoginItemText("Logout");
                 }
                 tvResult.setText(s);
             }
@@ -84,6 +93,8 @@ public class LoginFragment extends Fragment {
                 layoutLogout.setVisibility(View.INVISIBLE);
                 layoutLogin.setVisibility(View.VISIBLE);
                 tvResult.setText("");
+                changeFragmentInterface.setLoginItemText("Login");
+                changeFragmentInterface.setUsernameText("Username");
             }
         });
 
