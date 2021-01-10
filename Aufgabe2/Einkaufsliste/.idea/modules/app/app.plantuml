@@ -1,0 +1,210 @@
+@startuml
+
+title __EINKAUFSLISTE.APP's Class Diagram__\n
+
+  namespace com.example.einkaufsliste {
+    class com.example.einkaufsliste.BuildConfig {
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    interface com.example.einkaufsliste.ChangeFragmentInterface {
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    class com.example.einkaufsliste.MainActivity {
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    class com.example.einkaufsliste.Repository {
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace models {
+      class com.example.einkaufsliste.models.Article {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace models {
+      class com.example.einkaufsliste.models.BuyingList {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace models {
+      class com.example.einkaufsliste.models.ListData {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace models {
+      class com.example.einkaufsliste.models.User {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace rest {
+      class com.example.einkaufsliste.rest.IllegalCreateException {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace rest {
+      class com.example.einkaufsliste.rest.InfrastructureWebservice {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace rest {
+      class com.example.einkaufsliste.rest.NoSuchRowException {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace ui.lists {
+      class com.example.einkaufsliste.ui.lists.BuyingListsAdapter {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace ui.lists {
+      class com.example.einkaufsliste.ui.lists.ListDataAdapter {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace ui.lists {
+      class com.example.einkaufsliste.ui.lists.ListDataFragment {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace ui.lists {
+      class com.example.einkaufsliste.ui.lists.ListDataViewModel {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace ui.lists {
+      class com.example.einkaufsliste.ui.lists.ListsFragment {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace ui.lists {
+      class com.example.einkaufsliste.ui.lists.ListsViewModel {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace ui.login {
+      class com.example.einkaufsliste.ui.login.LoginFragment {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace ui.login {
+      class com.example.einkaufsliste.ui.login.LoginViewModel {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace ui.sampleData {
+      class com.example.einkaufsliste.ui.sampleData.SampleData {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace ui.settings {
+      class com.example.einkaufsliste.ui.settings.SettingsFragment {
+      }
+    }
+  }
+  
+
+  namespace com.example.einkaufsliste {
+    namespace ui.settings {
+      class com.example.einkaufsliste.ui.settings.SettingsViewModel {
+      }
+    }
+  }
+  
+
+  com.example.einkaufsliste.MainActivity .up.|> com.example.einkaufsliste.ChangeFragmentInterface
+  com.example.einkaufsliste.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.einkaufsliste.Repository o-- com.example.einkaufsliste.models.User : user
+  com.example.einkaufsliste.models.Article .up.|> java.io.Serializable
+  com.example.einkaufsliste.models.Article o-- com.example.einkaufsliste.models.BuyingList : buyingList
+  com.example.einkaufsliste.models.BuyingList .up.|> java.io.Serializable
+  com.example.einkaufsliste.models.ListData o-- com.example.einkaufsliste.ui.lists.ListDataAdapter : adapter
+  com.example.einkaufsliste.models.User .up.|> java.io.Serializable
+  com.example.einkaufsliste.ui.lists.BuyingListsAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  com.example.einkaufsliste.ui.lists.BuyingListsAdapter o-- com.example.einkaufsliste.ChangeFragmentInterface : changeFragmentInterface
+  com.example.einkaufsliste.ui.lists.BuyingListsAdapter o-- com.example.einkaufsliste.ui.lists.ListsViewModel : listsViewModel
+  com.example.einkaufsliste.ui.lists.ListDataAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  com.example.einkaufsliste.ui.lists.ListDataFragment -up-|> androidx.fragment.app.Fragment
+  com.example.einkaufsliste.ui.lists.ListDataFragment o-- com.example.einkaufsliste.ui.lists.ListDataAdapter : adapter
+  com.example.einkaufsliste.ui.lists.ListDataFragment o-- com.example.einkaufsliste.ui.lists.ListDataViewModel : listDataViewModel
+  com.example.einkaufsliste.ui.lists.ListDataViewModel -up-|> androidx.lifecycle.ViewModel
+  com.example.einkaufsliste.ui.lists.ListsFragment -up-|> androidx.fragment.app.Fragment
+  com.example.einkaufsliste.ui.lists.ListsFragment o-- com.example.einkaufsliste.ui.lists.BuyingListsAdapter : adapter
+  com.example.einkaufsliste.ui.lists.ListsFragment o-- com.example.einkaufsliste.ui.lists.ListsViewModel : listsViewModel
+  com.example.einkaufsliste.ui.lists.ListsViewModel -up-|> androidx.lifecycle.ViewModel
+  com.example.einkaufsliste.ui.lists.ListsViewModel o-- com.example.einkaufsliste.rest.InfrastructureWebservice : service
+  com.example.einkaufsliste.ui.login.LoginFragment -up-|> androidx.fragment.app.Fragment
+  com.example.einkaufsliste.ui.login.LoginFragment o-- com.example.einkaufsliste.ChangeFragmentInterface : changeFragmentInterface
+  com.example.einkaufsliste.ui.login.LoginFragment o-- com.example.einkaufsliste.ui.login.LoginViewModel : loginViewModel
+  com.example.einkaufsliste.ui.login.LoginViewModel -up-|> androidx.lifecycle.ViewModel
+  com.example.einkaufsliste.ui.settings.SettingsFragment -up-|> androidx.fragment.app.Fragment
+  com.example.einkaufsliste.ui.settings.SettingsFragment o-- com.example.einkaufsliste.ui.settings.SettingsViewModel : settingsViewModel
+  com.example.einkaufsliste.ui.settings.SettingsViewModel -up-|> androidx.lifecycle.ViewModel
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
