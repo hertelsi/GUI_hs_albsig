@@ -16,15 +16,15 @@ public class ListDataViewModel extends ViewModel {
 
     private InfrastructureWebservice service;
     private MutableLiveData<Collection<Article>> allArticles = new MutableLiveData<Collection<Article>>();
-    private BuyingList buyingList;
+    private MutableLiveData<BuyingList> buyingList = new MutableLiveData<>();
 
     public ListDataViewModel(){
         super();
         service = new InfrastructureWebservice();
         User user = Repository.getInstance().getUser();
         if (user != null) {
-            buyingList = user.getBuyingListById(Repository.getInstance().getCurrentBuyingListId());
-            allArticles.setValue(buyingList.getAllArticles());
+            buyingList.setValue(user.getBuyingListById(Repository.getInstance().getCurrentBuyingListId()));
+            allArticles.setValue(buyingList.getValue().getAllArticles());
         }
 
     }
@@ -35,7 +35,11 @@ public class ListDataViewModel extends ViewModel {
     }
 
     public void setBuyingList(BuyingList buyingList) {
-        this.buyingList = buyingList;
+        this.buyingList.postValue(buyingList);
+    }
+
+    public LiveData<BuyingList> getBuyingList() {
+        return this.buyingList;
     }
 
     public int addUser(String username){
@@ -53,7 +57,7 @@ public class ListDataViewModel extends ViewModel {
 
     public void addOneArticle(String unit, long amount, String name){
         if ((unit != null) && (amount != 0) && (name != null)){
-            Article newArticle = new Article(unit, amount, name, buyingList);
+            Article newArticle = new Article(unit, amount, name, buyingList.getValue());
             Repository.getInstance().setRunPollingThread(false);
             service.addArticle(newArticle);
             Repository.getInstance().setRunPollingThread(true);

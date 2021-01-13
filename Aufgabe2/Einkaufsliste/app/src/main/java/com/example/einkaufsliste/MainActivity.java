@@ -90,6 +90,12 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
         navController.navigate(id);
     }
 
+    @Override
+    public void setBuyingListName(String name){
+        Toolbar toolbar = this.findViewById(R.id.toolbar);
+        toolbar.setTitle(name);
+    }
+
     private void startThreadForUpdatingTheUser() {
         ListsViewModel listsViewModel = new ViewModelProvider(this).get(ListsViewModel.class);
         ListDataViewModel listDataViewModel = new ViewModelProvider(this).get(ListDataViewModel.class);
@@ -107,9 +113,15 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
                                 User user = service.login(currentUser);
                                 Repository.getInstance().setUser(user);
                                 listsViewModel.setAllbuyingLists(user.getBuyingLists());
-                                BuyingList b = user.getBuyingListById(Repository.getInstance().getCurrentBuyingListId());
-                                listDataViewModel.setBuyingList(b);
-                                listDataViewModel.setAllArticles(b.getAllArticles());
+
+                                long id = Repository.getInstance().getCurrentBuyingListId();
+                                if (id != -1){
+                                    BuyingList b = user.getBuyingListById(id);
+                                    if (b != null) {
+                                        listDataViewModel.setBuyingList(b);
+                                        listDataViewModel.setAllArticles(b.getAllArticles());
+                                    }
+                                }
                             }
                             sleep(150);
                         } catch (Exception e) {

@@ -26,6 +26,5 @@
     <fragment
         android:id="@+id/nav_singleList"
         android:name="com.example.einkaufsliste.ui.lists.ListDataFragment"
-        android:label="SingleBuyingList"
         tools:layout="@layout/fragment_listdata" />
 </navigation>

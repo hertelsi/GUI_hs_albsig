@@ -16,11 +16,11 @@ public class Repository {
 
     private User user = null;
 
-    private String ipAddress = "141.87.68.90";
+    private String ipAddress = "141.87.68.9";
 
     private Boolean runPollingThread = true;
 
-    private int currentBuyingListId;
+    private int currentBuyingListId = -1;
 
     public int getCurrentBuyingListId() {
         return currentBuyingListId;

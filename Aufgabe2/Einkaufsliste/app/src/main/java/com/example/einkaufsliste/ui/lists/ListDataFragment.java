@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.einkaufsliste.ChangeFragmentInterface;
 import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
 import com.example.einkaufsliste.models.Article;
@@ -43,6 +44,7 @@ public class ListDataFragment extends Fragment {
     private Button btnAddUser;
     private TextView tvAddUser;
     private Spinner spinner;
+    private ChangeFragmentInterface changeFragmentInterface;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -56,6 +58,8 @@ public class ListDataFragment extends Fragment {
         fab1 = root.findViewById(R.id.fabListData);
         btnAddUser = root.findViewById(R.id.btnAddUser);
         tvAddUser = root.findViewById(R.id.tvAddUser);
+        changeFragmentInterface = ((MainActivity)getActivity());
+
         // fab fuegt Editier-Inhalt der Liste hinzu
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +95,7 @@ public class ListDataFragment extends Fragment {
                 builder.show();
             }
         });
+
 
         return root;
     }
@@ -154,6 +159,13 @@ public class ListDataFragment extends Fragment {
             @Override
             public void onChanged(Collection<Article> articles) {
                 adapter.setArticles(articles);
+            }
+        });
+
+        listDataViewModel.getBuyingList().observe(getViewLifecycleOwner(), new Observer<BuyingList>() {
+            @Override
+            public void onChanged(BuyingList buyingList) {
+                changeFragmentInterface.setBuyingListName(buyingList.getName());
             }
         });
     }
