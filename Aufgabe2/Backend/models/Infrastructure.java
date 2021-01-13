@@ -15,39 +15,13 @@ public class Infrastructure implements InfrastructureRemote {
 
 	public Infrastructure() {
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Collection<BuyingList> getAllBuyingLists() {
-		return em.createQuery("SELECT b FROM BuyingList b").getResultList();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Collection<Article> getAllArticles() {
-		return em.createQuery("SELECT a FROM Article a").getResultList();
-	}
-
-	@Override
-	public long getCountArticles() {
-		return (long) em.createQuery("SELECT count(*) FROM Article a").getSingleResult();
-	}
-
-	@Override
-	public Article getArticle(long id) throws NoSuchRowException {
-		Article article = em.find(Article.class, id);
-		if (article != null)
-			return article;
-		else
-			throw new NoSuchRowException();
-	}
 	
 	@Override
 	public long saveArticle(Article article) {
 		Article a = em.find(Article.class, article.getId());
 
 		if (a != null) {
-			a.copyData(article); // a := article (deep copy)
+			a.copyData(article);
 			em.merge(a);
 			return a.getId();
 		} else
@@ -57,8 +31,8 @@ public class Infrastructure implements InfrastructureRemote {
 	}
 	
 	@Override
-	public void removeArticle(long primaryKey) throws NoSuchRowException {
-		Article a = em.find(Article.class, primaryKey);
+	public void removeArticle(long id) throws NoSuchRowException {
+		Article a = em.find(Article.class, id);
 		if (a != null)
 			em.remove(a);
 		else
@@ -79,7 +53,7 @@ public class Infrastructure implements InfrastructureRemote {
 		BuyingList b = em.find(BuyingList.class, buyingList.getId());
 
 		if (b != null) {
-			b.copyData(buyingList); // b := building (deep copy)
+			b.copyData(buyingList);
 			em.merge(b);
 			return b.getId();
 		} else
@@ -91,10 +65,8 @@ public class Infrastructure implements InfrastructureRemote {
 
 	@Override
 	public void removeBuyingList(long id) throws NoSuchRowException {
-		//em.createQuery("Delete FROM BuyingList where id=?1").setParameter(1, id);
 		BuyingList b  = em.find(BuyingList.class, id);
 		if (b != null) {
-			System.out.println("Buyinglist found");
 			for (Article a : b.getAllArticles()) {
 				em.remove(a);
 			}
@@ -104,7 +76,6 @@ public class Infrastructure implements InfrastructureRemote {
 		        saveUser(u);
 		    }
 			em.remove(b);
-			
 		}
 		else
 			throw new NoSuchRowException();
@@ -116,7 +87,6 @@ public class Infrastructure implements InfrastructureRemote {
 		User user = null;
 		try {
 			user= (User) em.createQuery("SELECT u FROM User u where name=?1").setParameter(1, name).getSingleResult();
-			System.out.print("-----" + user);
 			if(!user.getPassword().equals(password))
 				return null;
 		} catch (Exception ex)
@@ -140,22 +110,13 @@ public class Infrastructure implements InfrastructureRemote {
 		
 		return user;
 	}
-
-	@Override
-	public User getUser(long id) throws NoSuchRowException {
-		User user= em.find(User.class, id);
-		if (user != null)
-			return user;
-		else
-			throw new NoSuchRowException();
-	}
 	
 	@Override
 	public long saveUser(User user) {
 		User u= em.find(User.class, user.getId());
 
 		if (u != null) {
-			u.copyData(user); // u := user (deep copy)
+			u.copyData(user);
 			em.merge(u);
 			return u.getId();
 		} else
@@ -163,14 +124,4 @@ public class Infrastructure implements InfrastructureRemote {
 		
 		return user.getId();
 	}
-	
-	@Override
-	public void removeUser(long primaryKey) throws NoSuchRowException {
-		User u = em.find(User.class, primaryKey);
-		if (u != null)
-			em.remove(u);
-		else
-			throw new NoSuchRowException();
-	}
-
 }

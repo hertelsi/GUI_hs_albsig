@@ -3,10 +3,8 @@ package rest;
 import de.hsalbsig.inf.dea.model.*;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-//import javax.naming.InitialContext;
 //import javax.naming.NamingException;
 import javax.ws.rs.*;
-//import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,7 +19,6 @@ import java.util.Collection;
 @Path("buyingList")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
-// @Stateless // geht auch ...
 @RequestScoped
 public class EinkaufslisteService implements java.io.Serializable {
 	private static final long serialVersionUID = 1545633471206295064L;
@@ -30,33 +27,6 @@ public class EinkaufslisteService implements java.io.Serializable {
 	@EJB(mappedName = EJBNAME)
 	private InfrastructureRemote infrastructureRemote;
 
-	//
-	// Bemerkung:
-	// Falls es zu Problemen mit der Injektion geben sollte hülfe ggfs.
-	// nachfolgende explizite Vereinbarung:
-	//
-//	private InitialContext ctx;
-//
-//	// statt @EJB-Injektion
-//	{
-//		try {
-//			ctx = new InitialContext();
-//			infrastructureRemote = (InfrastructureRemote) ctx.lookup(EJBNAME);
-//		} catch (NamingException e) {
-//			System.out.println("Naming Exception nach lookup");
-//			e.printStackTrace();
-//		}
-//	}
-
-	@GET
-	@Path("/buyingLists/{id}")
-	public BuyingList getBuyingList(@PathParam("id") int id) throws NoSuchRowException {
-		System.out.println("\n\n---------------------------------");
-		System.out.println("EinkaufsListeRestProject :: GET getBuyingList id = " + id);
-		System.out.println("\n\n---------------------------------");
-		return infrastructureRemote.getBuyingList(id);
-	}
-	
 	@POST
 	@Produces({ "application/json" })
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -77,9 +47,8 @@ public class EinkaufslisteService implements java.io.Serializable {
 			a.setId(infrastructureRemote.saveArticle(a));
 			b.addOneArticle(a);
 			infrastructureRemote.saveBuyingList(b);
-		} catch (NoSuchRowException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new NotFoundException();
 		}
 		
 		return a;
@@ -89,39 +58,29 @@ public class EinkaufslisteService implements java.io.Serializable {
 	@Produces({ "application/json" })
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/buyingLists/user")
-	public Response addUserToBuyingList( 
+	public Response addUserToBuyingList(
 			@FormParam("username") String name, 
 			@FormParam("buyingListId") long buyingListId) throws NoSuchRowException {
 		
-		BuyingList buyingList = infrastructureRemote.getBuyingList(buyingListId);
-		User user = infrastructureRemote.getUser(name);
-		boolean success = false;
-		if ((user != null) && (buyingList != null)){
-			user.addOneBuyingList(buyingList);
-			infrastructureRemote.saveUser(user);
-			success = true;
-		}
-		else{
+		boolean success;
+		try {
+			BuyingList buyingList = infrastructureRemote.getBuyingList(buyingListId);
+			User user = infrastructureRemote.getUser(name);
+			success = false;
+			if ((user != null) && (buyingList != null)){
+				user.addOneBuyingList(buyingList);
+				infrastructureRemote.saveUser(user);
+				success = true;
+			}
+			else{
+				throw new NotFoundException();
+			}
+		} catch (Exception e) {
 			throw new NotFoundException();
 		}
 		
 		StatusMessage msg = RestApplication.getReturnMessage(success);
 		return Response.ok(msg).build();
-	}
-
-	@GET
-	@Path("/count")
-	public long getCountArticles() {
-		return infrastructureRemote.getCountArticles();
-	}
-	
-	@GET
-	@Path("/articles/{id}")
-	public Article getArticle(@PathParam("id") int id) throws NoSuchRowException {
-		System.out.println("\n\n---------------------------------");
-		System.out.println("EinkaufsListeRestProject :: getArticle id = " + id);
-		System.out.println("\n\n---------------------------------");
-		return infrastructureRemote.getArticle(id);
 	}
 	
 	@POST
@@ -175,9 +134,8 @@ public class EinkaufslisteService implements java.io.Serializable {
 			b.setId(infrastructureRemote.saveBuyingList(b));
 			u.addOneBuyingList(b);
 			infrastructureRemote.saveUser(u);
-		} catch (NoSuchRowException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new NotFoundException();
 		}
 		
 		return b;
@@ -194,8 +152,8 @@ public class EinkaufslisteService implements java.io.Serializable {
 		try {
 			success = true;
 			infrastructureRemote.removeBuyingList(id);
-		} catch (NoSuchRowException e) {
-			throw new NoSuchRowException();
+		} catch (Exception e) {
+			throw new NotFoundException();
 		}
 		StatusMessage msg = RestApplication.getReturnMessage(success);
 		return Response.ok(msg).build();
@@ -211,8 +169,8 @@ public class EinkaufslisteService implements java.io.Serializable {
 		try {
 			success = true;
 			infrastructureRemote.removeArticle(id);
-		} catch (NoSuchRowException e) {
-			throw new NoSuchRowException();
+		} catch (Exception e) {
+			throw new NotFoundException();
 		}
 		StatusMessage msg = RestApplication.getReturnMessage(success);
 		return Response.ok(msg).build();
