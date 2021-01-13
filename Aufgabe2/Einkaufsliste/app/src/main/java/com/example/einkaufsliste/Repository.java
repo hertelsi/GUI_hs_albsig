@@ -16,7 +16,7 @@ public class Repository {
 
     private User user = null;
 
-    private String ipAddress = "141.87.68.230";
+    private String ipAddress = "141.87.68.90";
 
     private Boolean runPollingThread = true;
 

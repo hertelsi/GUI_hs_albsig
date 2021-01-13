@@ -93,8 +93,9 @@ public class MainActivity extends AppCompatActivity implements ChangeFragmentInt
     private void startThreadForUpdatingTheUser() {
         ListsViewModel listsViewModel = new ViewModelProvider(this).get(ListsViewModel.class);
         ListDataViewModel listDataViewModel = new ViewModelProvider(this).get(ListDataViewModel.class);
+        InfrastructureWebservice service = new InfrastructureWebservice();
         Thread pollingThreadForUpdates = new Thread() {
-            InfrastructureWebservice service = new InfrastructureWebservice();
+
 
             public void run() {
                 while (true) {

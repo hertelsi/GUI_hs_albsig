@@ -24,42 +24,19 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class InfrastructureWebservice {
-    private String URL = "http://" +  Repository.getInstance().getIpAddress() + ":8080/EinkaufsListeRestProject/rest/buyingList";
+    private String frontURL = "http://";
+    private String lastURL = ":8080/EinkaufsListeRestProject/rest/buyingList";
 
     private Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, (JsonDeserializer) (json, typeOfT, context) -> new Date(json.getAsLong())).create();
 
     private java.net.URL url;
     private URLConnection connection;
     private HttpURLConnection httpConnection;
-
     private OkHttpClient client = new OkHttpClient();
-
     private String urlString;
 
-
-    public BuyingList getBuyingList(long id) throws NoSuchRowException {
-        urlString = URL + "/buyingLists/" + id;
-        Request request = new Request.Builder()
-                .url(urlString)
-                .build();
-        try {
-            Response response = client.newCall(request).execute();
-            String output;
-            BuyingList buyingList = null;
-            if ((output = response.body().string()) != null) {
-                buyingList = gson.fromJson(output, BuyingList.class);
-            }
-            return buyingList;
-        } catch (IOException e) { // zu newCall(request).execute() und response.body().string();
-            e.printStackTrace();
-        } catch (com.google.gson.JsonSyntaxException e) {
-            throw new NoSuchRowException();
-        }
-        return null;
-    }
-
     public User register(User u) throws SocketTimeoutException {
-        urlString = URL + "/register";
+        urlString = frontURL + Repository.getInstance().getIpAddress() + lastURL + "/register";
         OkHttpClient client = new OkHttpClient();
         String json = gson.toJson(u);
         RequestBody body = new FormBody.Builder()
@@ -90,7 +67,7 @@ public class InfrastructureWebservice {
     }
 
     public User login(User u) throws SocketTimeoutException {
-        urlString = URL + "/login";
+        urlString = frontURL + Repository.getInstance().getIpAddress() + lastURL + "/login";
         OkHttpClient client = new OkHttpClient();
         String json = gson.toJson(u);
         RequestBody body = new FormBody.Builder()
@@ -122,7 +99,7 @@ public class InfrastructureWebservice {
     }
 
     public int addUserToBuyingList(long buyingListId, String username){
-        urlString = URL + "/buyingLists/user";
+        urlString = frontURL + Repository.getInstance().getIpAddress() + lastURL + "/buyingLists/user";
         OkHttpClient client = new OkHttpClient();
         User user = Repository.getInstance().getUser();
         RequestBody body = new FormBody.Builder()
@@ -146,7 +123,7 @@ public class InfrastructureWebservice {
     }
 
     public int addBuyingList(BuyingList b){
-        urlString = URL + "/buyingLists";
+        urlString = frontURL + Repository.getInstance().getIpAddress() + lastURL + "/buyingLists";
         OkHttpClient client = new OkHttpClient();
         User user = Repository.getInstance().getUser();
         RequestBody body = new FormBody.Builder()
@@ -174,7 +151,7 @@ public class InfrastructureWebservice {
     }
 
     public int addArticle(Article a){
-        urlString = URL + "/articles";
+        urlString = frontURL + Repository.getInstance().getIpAddress() + lastURL + "/articles";
         OkHttpClient client = new OkHttpClient();
         User user = Repository.getInstance().getUser();
         RequestBody body = new FormBody.Builder()
@@ -201,7 +178,7 @@ public class InfrastructureWebservice {
     }
 
     public int deleteArticle(Article a){
-        urlString = URL + "/articles/" + a.getId();
+        urlString = frontURL + Repository.getInstance().getIpAddress() + lastURL + "/articles/" + a.getId();
         Request request = new Request.Builder()
                 .url(urlString)
                 .delete()
@@ -219,7 +196,7 @@ public class InfrastructureWebservice {
     }
 
     public int deleteBuyingList(BuyingList b){
-        urlString = URL + "/buyingLists/" + b.getId();
+        urlString = frontURL + Repository.getInstance().getIpAddress() + lastURL + "/buyingLists/" + b.getId();
         Request request = new Request.Builder()
                 .url(urlString)
                 .delete()
