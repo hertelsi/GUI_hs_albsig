@@ -213,7 +213,28 @@ public class InfrastructureWebservice {
         return -1;
     }
 
-
-
+    public int changeDate(int id, Date date){
+        urlString = frontURL + Repository.getInstance().getIpAddress() + lastURL + "/buyingLists/date";
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = new FormBody.Builder()
+                .add("buyingListId", String.valueOf(id))
+                .add("newBuyingDate", String.valueOf(date.getTime()))
+                .build();
+        Request request = new Request.Builder()
+                .url(urlString)
+                .post(body)
+                .build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            String responseMsg = response.body().string();
+            if (response.code() == 200) {
+                return 0;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.example.einkaufsliste.ui.lists;
 
+import android.widget.DatePicker;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,6 +12,8 @@ import com.example.einkaufsliste.models.BuyingList;
 import com.example.einkaufsliste.models.User;
 import com.example.einkaufsliste.rest.InfrastructureWebservice;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.Collection;
 
 public class ListDataViewModel extends ViewModel {
@@ -61,5 +65,17 @@ public class ListDataViewModel extends ViewModel {
             service.addArticle(newArticle);
             Repository.getInstance().setRunPollingThread(true);
         }
+    }
+
+    public void setDate(DatePicker datePicker){
+        int day = datePicker.getDayOfMonth();
+        int month = datePicker.getMonth();
+        int year =  datePicker.getYear();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        Date date = new Date(calendar.getTimeInMillis());
+        Repository.getInstance().setRunPollingThread(false);
+        service.changeDate(buyingList.getValue().getId(), date);
+        Repository.getInstance().setRunPollingThread(true);
     }
 }

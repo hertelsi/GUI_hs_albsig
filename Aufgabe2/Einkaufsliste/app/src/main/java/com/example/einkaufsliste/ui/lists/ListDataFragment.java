@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,6 +42,8 @@ public class ListDataFragment extends Fragment {
     private TextView tvAddUser;
     private Spinner spinner;
     private ChangeFragmentInterface changeFragmentInterface;
+    private TextView tvDate;
+    private Button changeDate;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,6 +58,9 @@ public class ListDataFragment extends Fragment {
         btnAddUser = root.findViewById(R.id.btnAddUser);
         tvAddUser = root.findViewById(R.id.tvAddUser);
         changeFragmentInterface = ((MainActivity)getActivity());
+        tvDate = root.findViewById(R.id.tvDate);
+        changeDate = root.findViewById(R.id.btnDate);
+
 
         // fab fuegt Editier-Inhalt der Liste hinzu
         fab1.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +86,29 @@ public class ListDataFragment extends Fragment {
                             tvAddUser.setText(R.string.userNotExist);
                         else
                             tvAddUser.setText(R.string.addedUser);
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            }
+        });
+
+        changeDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
+                View viewInflated = LayoutInflater.from(root.getContext()).inflate(R.layout.change_date_dialog, (ViewGroup) getView(),false);
+                builder.setView(viewInflated);
+                builder.setPositiveButton("Bestätigen", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DatePicker datePicker = viewInflated.findViewById(R.id.change_date_picker);
+                        listDataViewModel.setDate(datePicker);
                     }
                 });
                 builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -162,6 +191,7 @@ public class ListDataFragment extends Fragment {
             @Override
             public void onChanged(BuyingList buyingList) {
                 changeFragmentInterface.setBuyingListName(buyingList.getName());
+                tvDate.setText(buyingList.getBuyingDate().toString());
             }
         });
     }

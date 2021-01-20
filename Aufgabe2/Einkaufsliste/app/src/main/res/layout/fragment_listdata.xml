@@ -7,20 +7,42 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="236dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Date"
+        android:inputType="date"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:text="edit"
+        app:layout_constraintLeft_toRightOf="@+id/tvDate"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/btnAddUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="@dimen/fab_margin"
         android:backgroundTint="@color/blue_500"
         android:text="@string/addUser"
         app:layout_constraintBottom_toTopOf="@+id/rec_view_first"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDate"
         app:layout_constraintVertical_bias="0.1" />
 
     <TextView
