@@ -26,7 +26,6 @@ public class ListDataViewModel extends ViewModel {
             buyingList.setValue(user.getBuyingListById(Repository.getInstance().getCurrentBuyingListId()));
             allArticles.setValue(buyingList.getValue().getAllArticles());
         }
-
     }
     public LiveData<Collection<Article>> getAllArticles() { return allArticles;}
 

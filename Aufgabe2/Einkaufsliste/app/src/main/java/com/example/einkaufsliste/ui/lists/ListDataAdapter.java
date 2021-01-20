@@ -1,6 +1,5 @@
 package com.example.einkaufsliste.ui.lists;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,8 +16,6 @@ import com.example.einkaufsliste.MainActivity;
 import com.example.einkaufsliste.R;
 import com.example.einkaufsliste.Repository;
 import com.example.einkaufsliste.models.Article;
-import com.example.einkaufsliste.models.BuyingList;
-import com.example.einkaufsliste.models.ListData;
 
 import java.util.ArrayList;
 import java.util.Collection;

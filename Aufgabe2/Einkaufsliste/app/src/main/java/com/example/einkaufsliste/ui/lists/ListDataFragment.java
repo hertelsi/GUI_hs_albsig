@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,16 +26,13 @@ import com.example.einkaufsliste.R;
 import com.example.einkaufsliste.models.Article;
 import com.example.einkaufsliste.models.BuyingList;
 import com.example.einkaufsliste.Repository;
-import com.example.einkaufsliste.models.ListData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class ListDataFragment extends Fragment {
     private FloatingActionButton fab1;
-    private List<ListData> content;
     private ListDataAdapter adapter;
     private EditText edit_text_ListData;
     private ListDataViewModel listDataViewModel;
