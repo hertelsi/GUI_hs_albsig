@@ -84,6 +84,36 @@ public class EinkaufslisteService implements java.io.Serializable {
 	}
 	
 	@POST
+	@Produces({ "application/json" })
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Path("/buyingLists/date")
+	public Response changeTimeOfBuyingList( 
+			@FormParam("buyingListId") long buyingListId, 
+			@FormParam("newBuyingDate") String buyingDate ) throws NoSuchRowException {
+		
+		
+		boolean success;
+		try {
+			BuyingList buyingList = infrastructureRemote.getBuyingList(buyingListId);
+			Date newBuyingDate = new Date(Long.parseLong(buyingDate));
+			buyingList.setBuyingDate(newBuyingDate);
+			success = false;
+			if ((buyingList != null) && (newBuyingDate != null)){
+				infrastructureRemote.saveBuyingList(buyingList);
+				success = true;
+			}
+			else{
+				throw new NotFoundException();
+			}
+		} catch (Exception e) {
+			throw new NotFoundException();
+		}
+		
+		StatusMessage msg = RestApplication.getReturnMessage(success);
+		return Response.ok(msg).build();
+	}
+	
+	@POST
 	@Path("/login")
 	@Produces({ "application/json" })
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
